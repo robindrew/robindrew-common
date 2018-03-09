@@ -1,0 +1,162 @@
+<html>
+
+
+<head>
+<title>${title}</title>
+
+<!-- CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+
+<style>
+body { padding-top: 10px; }
+.top-spacer {padding-top: 10px; }
+form {margin: 0px; padding: 0px;}
+</style>
+
+
+</head>
+
+
+<body>
+#if($bean.hasName())
+#set($beanName = $bean.name)
+#else
+#set($beanName = "")
+#end
+
+<!-- START CONTAINER -->
+<div class="container">
+
+
+<!-- NAV BAR -->
+<nav class="navbar navbar-default">
+<div class="container-fluid">
+<div class="navbar-header">
+<a class="navbar-brand" href="/">${serviceName} #${serviceInstance}</a>
+</div>
+<ul class="nav navbar-nav">
+<li><a href="/BeanConsole">MBeans</a></li>
+#if($bean.hasName())
+<li><a href="/BeanConsole">${bean.domain} ${bean.type}</a></li>
+<li class="active"><a href="/BeanView?domain=${bean.domain}&type=${bean.type}&name=${beanName}">${bean.name}</a></li>
+#else
+<li><a href="/BeanConsole">${bean.domain}</a></li>
+<li class="active"><a href="/BeanView?domain=${bean.domain}&type=${bean.type}&name=${beanName}">${bean.type}</a></li>
+#end
+</ul>
+</div><!-- /.container-fluid -->
+</nav>
+<!-- NAV BAR -->
+
+
+<!-- START ROW -->
+<div class="row">
+
+<!-- TITLE -->
+<div class="col-md-12">
+<div class="panel panel-info">
+<div class="panel-heading">
+#if($bean.hasName())
+<h4>${bean.name}</h4>${bean.domain} ${bean.type}
+#else
+<h4>${bean.type}</h4>${bean.domain}
+#end
+</div>
+
+#if($attributes.size() > 0)
+<table class="table small table-hover table-striped table-bordered">
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Value</th>
+</tr>
+#foreach($attribute in $attributes)
+<tr>
+<td>${attribute.name}</td>
+<td><code>${attribute.typeName}</code></td>
+<td>
+#if($attribute.isNull())
+null
+#else
+#if($attribute.isSimpleType())
+#if($attribute.isAvailable())
+#if($attribute.isString())
+"${attribute.value}"
+#else
+${attribute.value}
+#end
+#else
+<i>not available</i>
+#end
+#else
+<a href="/BeanAttribute?domain=${bean.domain}&type=${bean.type}&name=${beanName}&attribute=${attribute.name}">${attribute.name}</a>
+#end
+#end
+</td>
+</tr>
+#end
+</table>
+#end
+
+</div>
+</div>
+
+
+#foreach($operation in $operations)
+<div class="col-md-6">
+<div class="panel panel-info">
+<div class="panel-heading">${operation.name}()</div>
+<form id="Form-${operation.index}" action="/BeanOperation" method="GET">
+<input type="hidden" name="domain" value="${bean.domain}"/>
+<input type="hidden" name="type" value="${bean.type}"/>
+<input type="hidden" name="name" value="${beanName}"/>
+<input type="hidden" name="operation" value="${operation.index}"/>
+<table class="table small">
+#foreach($parameter in $operation.parameters)
+<tr>
+<th>${parameter.name}</th>
+<th><code>${parameter.typeName}</code></th>
+<td><input type="text" name="param${foreach.index}-${parameter.name}"/></td>
+</tr>
+#end
+<tr>
+<td colspan="3">
+<button id="Button-${operation.index}" type="button" class="btn btn-primary">Execute</button>
+</td>
+</tr>
+</table>
+</form>
+</div>
+</div>
+#end
+
+
+
+<!-- END ROW -->
+</div>
+
+<!-- END CONTAINER -->
+</div>
+
+
+
+<!-- JavaScript -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js" ></script>
+<script>
+#foreach($operation in $operations)
+// Operation #${operation.index} - ${operation.name}()
+$("#Button-${operation.index}").click(function() {
+	$("#Form-${operation.index}").submit();
+});
+$("#Form-${operation.index}").keypress(function(event) {
+    if (event.which == 13) {
+    	$("#Form-${operation.index}").submit();
+    }
+});
+
+#end
+</script>
+</body>
+</html>

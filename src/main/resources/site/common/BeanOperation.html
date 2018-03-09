@@ -1,0 +1,98 @@
+<html>
+
+
+<head>
+<title>${title}</title>
+
+<!-- CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+
+<style>
+body { padding-top: 10px; }
+.top-spacer {padding-top: 10px; }]
+</style>
+
+
+</head>
+
+
+<body>
+#if($bean.hasName())
+#set($beanName = $bean.name)
+#else
+#set($beanName = "")
+#end
+
+<!-- START CONTAINER -->
+<div class="container">
+
+
+<!-- NAV BAR -->
+<nav class="navbar navbar-default">
+<div class="container-fluid">
+<div class="navbar-header">
+<a class="navbar-brand" href="/">${serviceName} #${serviceInstance}</a>
+</div>
+<ul class="nav navbar-nav">
+<li><a href="/BeanConsole">MBeans</a></li>
+#if($bean.hasName())
+<li><a href="/BeanView?domain=${bean.domain}&type=${bean.type}&name=${beanName}">${bean.domain} ${bean.type}</a></li>
+<li><a href="/BeanView?domain=${bean.domain}&type=${bean.type}&name=${beanName}">${bean.name}</a></li>
+#else
+<li><a href="/BeanView?domain=${bean.domain}&type=${bean.type}&name=${beanName}">${bean.domain}</a></li>
+<li><a href="/BeanView?domain=${bean.domain}&type=${bean.type}&name=${beanName}">${bean.type}</a></li>
+#end
+<li class="active"><a href="">.${operation.name}()</a></li>
+</ul>
+</div><!-- /.container-fluid -->
+</nav>
+<!-- NAV BAR -->
+
+
+<!-- START ROW -->
+<div class="row">
+
+<!-- TITLE -->
+<div class="col-md-12">
+<div class="panel panel-info">
+<div class="panel-heading">
+#if($bean.hasName())
+<h4>${bean.name}</h4>${bean.domain} ${bean.type}
+#else
+<h4>${bean.type}</h4>${bean.domain}
+#end
+</div>
+<table class="table table-bordered">
+<tr class="active"><th>${operation.name}() #if($operationFailed) &nbsp;&nbsp;&nbsp;<span class="label label-danger">FAILED</span> #end</th></tr>
+<tr><td><code>${returnType}</code></td></tr>
+
+#if($valueType == "String")
+<tr #if($operationFailed) class="danger" #end><td>
+<pre>${value}</pre>
+</td></tr>
+#end
+
+#if($valueType == "Json")
+<tr #if($operationFailed) class="danger" #end><td>
+<pre>${value}</pre>
+</td></tr>
+#end
+
+</table>
+</div>
+</div>
+
+<!-- END ROW -->
+</div>
+
+<!-- END CONTAINER -->
+</div>
+
+
+
+<!-- JavaScript -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js" ></script>
+</body>
+</html>

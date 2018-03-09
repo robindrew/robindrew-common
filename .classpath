@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/main/resources"/>
+	<classpathentry kind="src" path="src/tool/java"/>
+	<classpathentry kind="src" path="src/test/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8/"/>
+	<classpathentry kind="var" path="MAVEN_REPO/junit/junit/4.12/junit-4.12.jar" sourcepath="MAVEN_REPO/junit/junit/4.12/junit-4.12-sources.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/com/google/guava/guava/23.0/guava-23.0.jar" sourcepath="MAVEN_REPO/com/google/guava/guava/23.0/guava-23.0-sources.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/org/simpleframework/simple-xml/2.7.1/simple-xml-2.7.1.jar" sourcepath="MAVEN_REPO/org/simpleframework/simple-xml/2.7.1/simple-xml-2.7.1-sources.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar" sourcepath="MAVEN_REPO/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25-sources.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/org/apache/velocity/velocity/1.7/velocity-1.7.jar" sourcepath="MAVEN_REPO/org/apache/velocity/velocity/1.7/velocity-1.7-sources.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/net/sf/trove4j/trove4j/3.0.3/trove4j-3.0.3.jar" sourcepath="MAVEN_REPO/net/sf/trove4j/trove4j/3.0.3/trove4j-3.0.3-sources.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/uk/org/lidalia/sysout-over-slf4j/1.0.2/sysout-over-slf4j-1.0.2.jar" sourcepath="MAVEN_REPO/uk/org/lidalia/sysout-over-slf4j/1.0.2/sysout-over-slf4j-1.0.2-sources.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/org/apache/commons/commons-lang3/3.7/commons-lang3-3.7.jar" sourcepath="MAVEN_REPO/org/apache/commons/commons-lang3/3.7/commons-lang3-3.7-sources.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/commons-io/commons-io/2.6/commons-io-2.6.jar" sourcepath="MAVEN_REPO/commons-io/commons-io/2.6/commons-io-2.6-sources.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/commons-codec/commons-codec/1.11/commons-codec-1.11.jar" sourcepath="MAVEN_REPO/commons-codec/commons-codec/1.11/commons-codec-1.11-sources.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/ch/qos/logback/logback-core/1.2.3/logback-core-1.2.3.jar" sourcepath="MAVEN_REPO/ch/qos/logback/logback-core/1.2.3/logback-core-1.2.3-sources.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/ch/qos/logback/logback-classic/1.2.3/logback-classic-1.2.3.jar" sourcepath="MAVEN_REPO/ch/qos/logback/logback-classic/1.2.3/logback-classic-1.2.3-sources.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/com/thoughtworks/xstream/xstream/1.4.10/xstream-1.4.10.jar" sourcepath="MAVEN_REPO/com/thoughtworks/xstream/xstream/1.4.10/xstream-1.4.10-sources.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar" sourcepath="MAVEN_REPO/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3-sources.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/com/google/code/gson/gson/2.8.2/gson-2.8.2.jar" sourcepath="MAVEN_REPO/com/google/code/gson/gson/2.8.2/gson-2.8.2-sources.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/commons-collections/commons-collections/3.2.2/commons-collections-3.2.2.jar" sourcepath="MAVEN_REPO/commons-collections/commons-collections/3.2.2/commons-collections-3.2.2-sources.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/mysql/mysql-connector-java/5.1.23/mysql-connector-java-5.1.23.jar" sourcepath="MAVEN_REPO/mysql/mysql-connector-java/5.1.23/mysql-connector-java-5.1.23-sources.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/com/h2database/h2/1.4.196/h2-1.4.196.jar" sourcepath="MAVEN_REPO/com/h2database/h2/1.4.196/h2-1.4.196-sources.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/org/apache/derby/derby/10.14.1.0/derby-10.14.1.0.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/org/hsqldb/hsqldb/2.4.0/hsqldb-2.4.0.jar" sourcepath="MAVEN_REPO/org/hsqldb/hsqldb/2.4.0/hsqldb-2.4.0-sources.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/org/apache/commons/commons-pool2/2.5.0/commons-pool2-2.5.0.jar" sourcepath="MAVEN_REPO/org/apache/commons/commons-pool2/2.5.0/commons-pool2-2.5.0-sources.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/org/apache/commons/commons-dbcp2/2.2.0/commons-dbcp2-2.2.0.jar" sourcepath="MAVEN_REPO/org/apache/commons/commons-dbcp2/2.2.0/commons-dbcp2-2.2.0-sources.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/commons-logging/commons-logging/1.2/commons-logging-1.2.jar" sourcepath="MAVEN_REPO/commons-logging/commons-logging/1.2/commons-logging-1.2-sources.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/org/mockito/mockito-core/2.13.1/mockito-core-2.13.1.jar" sourcepath="MAVEN_REPO/org/mockito/mockito-core/2.13.1/mockito-core-2.13.1-sources.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/net/coobird/thumbnailator/0.4.8/thumbnailator-0.4.8.jar" sourcepath="MAVEN_REPO/net/coobird/thumbnailator/0.4.8/thumbnailator-0.4.8-sources.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/org/imgscalr/imgscalr-lib/4.2/imgscalr-lib-4.2.jar" sourcepath="MAVEN_REPO/org/imgscalr/imgscalr-lib/4.2/imgscalr-lib-4.2-sources.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar" sourcepath="MAVEN_REPO/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0-sources.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/log4j/log4j/1.2.17/log4j-1.2.17.jar" sourcepath="MAVEN_REPO/log4j/log4j/1.2.17/log4j-1.2.17-sources.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/org/eclipse/jetty/jetty-servlet/9.4.8.v20171121/jetty-servlet-9.4.8.v20171121.jar" sourcepath="MAVEN_REPO/org/eclipse/jetty/jetty-servlet/9.4.8.v20171121/jetty-servlet-9.4.8.v20171121-sources.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/org/eclipse/jetty/jetty-security/9.4.8.v20171121/jetty-security-9.4.8.v20171121.jar" sourcepath="MAVEN_REPO/org/eclipse/jetty/jetty-security/9.4.8.v20171121/jetty-security-9.4.8.v20171121-sources.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/org/eclipse/jetty/jetty-server/9.4.8.v20171121/jetty-server-9.4.8.v20171121.jar" sourcepath="MAVEN_REPO/org/eclipse/jetty/jetty-server/9.4.8.v20171121/jetty-server-9.4.8.v20171121-sources.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/org/eclipse/jetty/jetty-io/9.4.8.v20171121/jetty-io-9.4.8.v20171121.jar" sourcepath="MAVEN_REPO/org/eclipse/jetty/jetty-io/9.4.8.v20171121/jetty-io-9.4.8.v20171121-sources.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/org/eclipse/jetty/jetty-http/9.4.8.v20171121/jetty-http-9.4.8.v20171121.jar" sourcepath="MAVEN_REPO/org/eclipse/jetty/jetty-http/9.4.8.v20171121/jetty-http-9.4.8.v20171121-sources.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/org/eclipse/jetty/jetty-util/9.4.8.v20171121/jetty-util-9.4.8.v20171121.jar" sourcepath="MAVEN_REPO/org/eclipse/jetty/jetty-util/9.4.8.v20171121/jetty-util-9.4.8.v20171121-sources.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/com/lightstreamer/client/lightstreamer-client-6.0.2.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

@@ -1,0 +1,102 @@
+<html>
+
+
+<head>
+<title>${title}</title>
+
+<!-- CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+
+<style>
+body { padding-top: 10px; }
+.top-spacer {padding-top: 10px; }]
+</style>
+
+
+</head>
+
+
+<body>
+
+<!-- START CONTAINER -->
+<div class="container">
+
+
+<!-- NAV BAR -->
+<nav class="navbar navbar-default">
+<div class="container-fluid">
+<div class="navbar-header">
+<a class="navbar-brand" href="/">${serviceName} #${serviceInstance}</a>
+</div>
+</div><!-- /.container-fluid -->
+</nav>
+<!-- NAV BAR -->
+
+
+<!-- START ROW -->
+<div class="row">
+
+<!-- TITLE -->
+<div class="col-md-12">
+<h3>${serviceName} #${serviceInstance}</h3>
+<p>Welcome to the <b>${serviceName}</b> control panel</p>
+</div>
+
+
+<div class="col-md-3">
+<table class="table small table-hover table-striped table-bordered">
+<tr><th>Service</th><td>${serviceName}</td></tr>
+<tr><th>Instance</th><td>#${serviceInstance}</td></tr>
+<tr><th>Environment</th><td>${serviceEnv}</td></tr>
+</table>
+</div>
+
+<div class="col-md-3">
+<table class="table small table-hover table-striped table-bordered">
+<tr><th>Hostname</th><td>${systemHost}</td></tr>
+<tr><th>IP Address</th><td>${systemAddress}</td></tr>
+<tr><th>Process Id</th><td>${processId}</td></tr>
+</table>
+</div>
+
+<div class="col-md-3">
+<table class="table small table-hover table-striped table-bordered">
+<tr><th>System Time</th><td>${systemTime}</td></tr>
+<tr><th>Start Time</th><td>${javaStartTime}</td></tr>
+<tr><th>Uptime</th><td>${javaUptime}</td></tr>
+</table>
+</div>
+
+<div class="col-md-3">
+<table class="table small table-hover table-striped table-bordered">
+<tr><th>Memory Percent</th><td>${javaPercentMemory}</td></tr>
+<tr><th>Memory Used</th><td>${javaUsedMemory}</td></tr>
+<tr><th>Memory Limit</th><td>${javaMaxMemory}</td></tr>
+</table>
+</div>
+
+<div class="col-md-12">
+#foreach($entry in $linkMap.entrySet())
+<button id="Button_${entry.value.htmlName}" type="button" class="btn btn-${entry.value.color}">${entry.value.displayName}</button>&nbsp;&nbsp;
+#end
+</div>
+
+<!-- END ROW -->
+</div>
+
+<!-- END CONTAINER -->
+</div>
+
+
+
+<!-- JavaScript -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js" ></script>
+<script>
+#foreach($entry in $linkMap.entrySet())
+$("#Button_${entry.value.htmlName}").click(function() { window.location.href = "${entry.value.url}"; });
+#end
+</script>
+</body>
+</html>

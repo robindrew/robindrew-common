@@ -1,0 +1,117 @@
+<html>
+
+
+<head>
+<title>${title}</title>
+
+<!-- CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+
+<style>
+body { padding-top: 10px; }
+.top-spacer {padding-top: 10px; }]
+</style>
+
+
+</head>
+
+
+<body>
+
+<!-- START CONTAINER -->
+<div class="container">
+
+
+<!-- NAV BAR -->
+<nav class="navbar navbar-default">
+<div class="container-fluid">
+<div class="navbar-header">
+<a class="navbar-brand" href="/">${serviceName} #${serviceInstance}</a>
+</div>
+<ul class="nav navbar-nav">
+<li class="active"><a href="/BeanConsole">MBeans</a></li>
+</ul>
+</div><!-- /.container-fluid -->
+</nav>
+<!-- NAV BAR -->
+
+
+<!-- START ROW -->
+<div class="row">
+
+<!-- TITLE -->
+<div class="col-md-12">
+<h3>MBean Console</h3>
+<p>This page gives access to the <b>MBeans</b> registered with this virtual machine.</p>
+</div>
+
+<div class="col-md-5">
+<div class="panel panel-info">
+<div class="panel-heading">
+<h4>Standard MBeans</h4>
+These MBeans are common to every Java application
+</div>
+<table class="table small table-hover table-striped table-bordered">
+<tr>
+<th>Domain</th>
+<th>Type</th>
+<th>Name</th>
+</tr>
+#foreach($bean in $standardBeans)
+#if($bean.hasName())
+#set($beanName = $bean.name)
+#else
+#set($beanName = "")
+#end
+<tr>
+<th><a href="/BeanView?domain=${bean.domain}&type=${bean.type}&name=${beanName}">${bean.domain}</a></th>
+<td><a href="/BeanView?domain=${bean.domain}&type=${bean.type}&name=${beanName}">${bean.type}</a></td>
+<td>#if($bean.hasName()) <a href="/BeanView?domain=${bean.domain}&type=${bean.type}&name=${beanName}">${bean.name}</a> #end</td>
+</tr>
+#end
+</table>
+</div>
+</div>
+
+<div class="col-md-7">
+<div class="panel panel-success">
+<div class="panel-heading">
+<h4>Custom MBeans</h4>
+These MBeans are specific to this Java application
+</div>
+<table class="table small table-hover table-striped table-bordered">
+<tr>
+<th>Domain</th>
+<th>Type</th>
+<th>Name</th>
+</tr>
+#foreach($bean in $customBeans)
+#if($bean.hasName())
+#set($beanName = $bean.name)
+#else
+#set($beanName = "")
+#end
+<tr>
+<th><a href="/BeanView?domain=${bean.domain}&type=${bean.type}&name=${beanName}">${bean.domain}</a></th>
+<td><a href="/BeanView?domain=${bean.domain}&type=${bean.type}&name=${beanName}">${bean.type}</a></td>
+<td>#if($bean.hasName()) <a href="/BeanView?domain=${bean.domain}&type=${bean.type}&name=${beanName}">${bean.name}</a> #end</td>
+</tr>
+#end
+</table>
+</div>
+</div>
+
+<!-- END ROW -->
+</div>
+
+<!-- END CONTAINER -->
+</div>
+
+
+
+<!-- JavaScript -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js" ></script>
+</body>
+</html>
