@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.TimeZone;
@@ -38,6 +39,19 @@ public final class Dates {
 	 * Inaccessible Constructor.
 	 */
 	private Dates() {
+	}
+
+	/**
+	 * Converts a {@link LocalDateTime} from one timezone to another.
+	 * @param date the date to convert.
+	 * @param fromZone the timezone to convert from.
+	 * @param toZone the timezone to convert to.
+	 * @return the converted date.
+	 */
+	public static LocalDateTime convertDateTime(LocalDateTime date, ZoneId fromZone, ZoneId toZone) {
+		ZonedDateTime local = date.atZone(fromZone);
+		ZonedDateTime utc = ZonedDateTime.ofInstant(local.toInstant(), toZone);
+		return utc.toLocalDateTime();
 	}
 
 	/**

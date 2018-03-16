@@ -8,10 +8,12 @@ public class Reference<V> implements IReference<V> {
 
 	private final AtomicReference<V> reference = new AtomicReference<>(null);
 
+	@Override
 	public boolean isSet() {
 		return reference.get() != null;
 	}
 
+	@Override
 	public void set(V value) {
 		Check.notNull("value", value);
 		if (!reference.compareAndSet(null, value)) {
@@ -27,5 +29,4 @@ public class Reference<V> implements IReference<V> {
 		}
 		return value;
 	}
-
 }
