@@ -1,7 +1,7 @@
 package com.robindrew.common.codec;
 
 /**
- * XML & HTML entity encoder.
+ * XML &amp; HTML entity encoder.
  * <p>
  * TODO: add option to encode full html symbol set
  */

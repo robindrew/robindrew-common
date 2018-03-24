@@ -218,7 +218,7 @@ public class Strings {
 
 	/**
 	 * Format the given bytes in the array.
-	 * @param bytes the array of bytes.
+	 * @param array the array of bytes.
 	 * @return the formatted text.
 	 */
 	public static String bytes(byte[] array) {

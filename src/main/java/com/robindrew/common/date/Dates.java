@@ -13,7 +13,7 @@ import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Thread-safe, efficient date parsing & formatting.
+ * Thread-safe, efficient date parsing &amp; formatting.
  * <p>
  * Performance tests reveal a significant drop in object allocation, speed and memory footprint (~5x).
  */
