@@ -7,6 +7,7 @@ import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -139,6 +140,30 @@ public class Images {
 		graphics.dispose();
 
 		return newImage;
+	}
+
+	public static void writeAsGif(RenderedImage image, File file) {
+		try {
+			ImageIO.write(image, "GIF", file);
+		} catch (IOException e) {
+			throw Java.propagate(e);
+		}
+	}
+
+	public static void writeAsPng(RenderedImage image, File file) {
+		try {
+			ImageIO.write(image, "PNG", file);
+		} catch (IOException e) {
+			throw Java.propagate(e);
+		}
+	}
+
+	public static void writeAsJpg(RenderedImage image, File file) {
+		try {
+			ImageIO.write(image, "JPG", file);
+		} catch (IOException e) {
+			throw Java.propagate(e);
+		}
 	}
 
 }
