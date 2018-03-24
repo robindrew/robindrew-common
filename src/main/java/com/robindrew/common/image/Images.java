@@ -1,5 +1,8 @@
 package com.robindrew.common.image;
 
+import static com.robindrew.common.image.ImageFormat.GIF;
+import static com.robindrew.common.image.ImageFormat.JPG;
+import static com.robindrew.common.image.ImageFormat.PNG;
 import static java.awt.RenderingHints.KEY_INTERPOLATION;
 import static java.awt.RenderingHints.VALUE_INTERPOLATION_BILINEAR;
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;
@@ -9,6 +12,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -142,28 +146,46 @@ public class Images {
 		return newImage;
 	}
 
-	public static void writeAsGif(RenderedImage image, File file) {
+	public static void writeToFile(RenderedImage image, ImageFormat format, File file) {
 		try {
-			ImageIO.write(image, "GIF", file);
+			ImageIO.write(image, format.name(), file);
 		} catch (IOException e) {
 			throw Java.propagate(e);
 		}
+	}
+
+	public static byte[] toByteArray(RenderedImage image, ImageFormat format) {
+		try {
+			ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+			ImageIO.write(image, format.name(), bytes);
+			return bytes.toByteArray();
+		} catch (IOException e) {
+			throw Java.propagate(e);
+		}
+	}
+
+	public static void writeAsGif(RenderedImage image, File file) {
+		writeToFile(image, GIF, file);
 	}
 
 	public static void writeAsPng(RenderedImage image, File file) {
-		try {
-			ImageIO.write(image, "PNG", file);
-		} catch (IOException e) {
-			throw Java.propagate(e);
-		}
+		writeToFile(image, PNG, file);
 	}
 
 	public static void writeAsJpg(RenderedImage image, File file) {
-		try {
-			ImageIO.write(image, "JPG", file);
-		} catch (IOException e) {
-			throw Java.propagate(e);
-		}
+		writeToFile(image, JPG, file);
+	}
+
+	public static byte[] toGif(RenderedImage image) {
+		return toByteArray(image, GIF);
+	}
+
+	public static byte[] toPng(RenderedImage image) {
+		return toByteArray(image, PNG);
+	}
+
+	public static byte[] toJpg(RenderedImage image) {
+		return toByteArray(image, JPG);
 	}
 
 }
