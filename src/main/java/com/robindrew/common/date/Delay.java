@@ -10,7 +10,7 @@ public class Delay {
 	/** The delay in millis. */
 	private final long delayInMillis;
 	/** The last expiry time. */
-	private long lastExpiryTime = 0;
+	private volatile long lastExpiryTime = 0;
 
 	/**
 	 * Creates a new delay.
