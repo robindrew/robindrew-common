@@ -12,4 +12,6 @@ I also switch off restricted API errors
 
     > Window > Preferences > Java > Compiler > Errors/Warnings > Decprecated and restricted API > Forbidden reference (access rules): "Warning"
 
+Currently the minimum version for all my projects is Java 8.
+
 Enjoy
