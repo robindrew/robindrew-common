@@ -4,7 +4,7 @@ of existing functionality, but I do try to avoid this!
 
 This library is currently a base for all my projects, notably my trading and turnengine projects.
 
-I always use UTF-8 encoding, so in Eclipse you need to:
+I always use **UTF-8** encoding, so in Eclipse you need to:
 
     > Window > Preferences > General > Workspace > Text file encoding > Other: "UTF-8"
 
@@ -12,6 +12,6 @@ I also switch off restricted API errors
 
     > Window > Preferences > Java > Compiler > Errors/Warnings > Decprecated and restricted API > Forbidden reference (access rules): "Warning"
 
-Currently the minimum version for all my projects is Java 8.
+Currently the minimum version for all my projects is **Java 8**.
 
 Enjoy
