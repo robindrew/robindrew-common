@@ -499,8 +499,11 @@ public class Strings {
 		return new Selection(text).extract(from, to);
 	}
 
+	public static String duration(long millisDuration) {
+		return new DurationMillis(millisDuration).toString();
+	}
+
 	public static String duration(long fromTimeMillis, long toTimeMillis) {
 		return new DurationMillis(fromTimeMillis, toTimeMillis).toString();
 	}
-
 }
