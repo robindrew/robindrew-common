@@ -55,8 +55,6 @@ public class Args {
 	public File getDirectory(String name, boolean exists) {
 		String path = get(name);
 		File directory = new File(path);
-		System.out.println(directory.getAbsolutePath());
-		System.out.println(directory.exists());
 		if (exists && !directory.exists()) {
 			throw new IllegalArgumentException("Argument '" + name + "' - directory does not exist: " + directory);
 		}
