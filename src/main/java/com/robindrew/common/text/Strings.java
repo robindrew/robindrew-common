@@ -65,6 +65,10 @@ public class Strings {
 		return number(collection.size());
 	}
 
+	public static String number(byte[] bytes) {
+		return number(bytes.length);
+	}
+
 	public static String number(Map<?, ?> map) {
 		return number(map.size());
 	}
