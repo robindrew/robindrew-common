@@ -4,6 +4,7 @@ import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
@@ -23,6 +24,9 @@ public final class Dates {
 	public static final TimeZone UTC = TimeZone.getTimeZone("UTC");
 	/** The UTC Zone Id. */
 	public static final ZoneId UTC_ZONE = ZoneOffset.UTC.normalized();
+
+	/** The zero {@link LocalTime} - 0 hours, 0 minutes, 0 seconds, 0 nanos! */
+	public static final LocalTime ZERO_LOCAL_TIME = LocalTime.of(0, 0, 0, 0);
 
 	/** The number of nanoseconds per microsecond. */
 	public static final long NANOS_PER_MICRO = 1000;
@@ -274,6 +278,10 @@ public final class Dates {
 
 	public static long getDurationMillis(TimeUnit unit) {
 		return unit.toMillis(1);
+	}
+
+	public static LocalDateTime toLocalDateTime(LocalDate date) {
+		return LocalDateTime.of(date, ZERO_LOCAL_TIME);
 	}
 
 }
