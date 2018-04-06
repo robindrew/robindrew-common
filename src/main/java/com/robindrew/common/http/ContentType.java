@@ -14,6 +14,11 @@ public class ContentType {
 	/** application/json; charset=UTF-8 */
 	public static final ContentType APPLICATION_JSON = new ContentType(MimeType.APPLICATION_JSON, Charsets.UTF_8);
 
+	/** image/png */
+	public static final ContentType IMAGE_PNG = new ContentType(MimeType.IMAGE_PNG);
+	/** image/jpeg */
+	public static final ContentType IMAGE_JPEG = new ContentType(MimeType.IMAGE_JPEG);
+
 	private final MimeType type;
 	private final String charset;
 	private final String contentType;
