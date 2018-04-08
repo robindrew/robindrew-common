@@ -53,7 +53,7 @@ public class Services {
 		if (offset < 0 || offset > 9) {
 			throw new IllegalArgumentException("offset=" + offset);
 		}
-		return getServiceInstance() + offset;
+		return getServicePort() + offset;
 	}
 
 	/**
