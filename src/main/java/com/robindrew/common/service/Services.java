@@ -45,6 +45,18 @@ public class Services {
 	}
 
 	/**
+	 * Returns a port offset to the base service port.
+	 * @param offset the offset (0-9)
+	 * @return the port.
+	 */
+	public static int getOffsetPort(int offset) {
+		if (offset < 0 || offset > 9) {
+			throw new IllegalArgumentException("offset=" + offset);
+		}
+		return getServiceInstance() + offset;
+	}
+
+	/**
 	 * Returns the service instance.
 	 */
 	public static int getServiceInstance() {
