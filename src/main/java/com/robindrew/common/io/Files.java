@@ -47,6 +47,21 @@ public class Files {
 	public static final Charset DEFAULT_CHARSET = Charsets.UTF_8;
 	public static final String DEFAULT_LINE_SEPARATOR = Java.getLineSeparator();
 
+	/**
+	 * Creates a temporary file that is deleted automatically when the JVM exists.
+	 * @return the temporary file.
+	 */
+	public static final File createTempFile() {
+		try {
+			String prefix = System.nanoTime() + ".";
+			File file = File.createTempFile(prefix, ".java.tmp");
+			file.deleteOnExit();
+			return file;
+		} catch (Exception e) {
+			throw Java.propagate(e);
+		}
+	}
+
 	public static final ByteSource asByteSource(File file) {
 		return com.google.common.io.Files.asByteSource(file);
 	}
