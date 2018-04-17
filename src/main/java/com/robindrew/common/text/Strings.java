@@ -506,4 +506,10 @@ public class Strings {
 	public static String duration(long fromTimeMillis, long toTimeMillis) {
 		return new DurationMillis(fromTimeMillis, toTimeMillis).toString();
 	}
+
+	public static char[] chars(StringBuilder builder) {
+		char[] array = new char[builder.length()];
+		builder.getChars(0, array.length, array, 0);
+		return array;
+	}
 }
