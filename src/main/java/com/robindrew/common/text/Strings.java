@@ -25,6 +25,8 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.google.common.base.Charsets;
 import com.google.common.base.Throwables;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.robindrew.common.date.duration.DurationMillis;
 import com.robindrew.common.lang.bytes.Bytes;
 import com.robindrew.common.text.selection.Selection;
@@ -47,6 +49,11 @@ public class Strings {
 	 * Utility class - private constructor.
 	 */
 	private Strings() {
+	}
+
+	public static String json(String json) {
+		JsonElement element = new JsonParser().parse(json);
+		return new GsonBuilder().setPrettyPrinting().create().toJson(element);
 	}
 
 	public static String json(Object object) {
