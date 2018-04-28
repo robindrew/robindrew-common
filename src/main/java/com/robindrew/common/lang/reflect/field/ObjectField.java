@@ -182,11 +182,12 @@ public class ObjectField implements IField {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public Object get(Object instance) {
+	public <V> V get(Object instance) {
 		try {
 			setAccessible(true);
-			return field.get(instance);
+			return (V) field.get(instance);
 		} catch (Exception e) {
 			throw Java.propagate(e);
 		}
@@ -270,5 +271,10 @@ public class ObjectField implements IField {
 		} catch (Exception e) {
 			throw Java.propagate(e);
 		}
+	}
+
+	@Override
+	public boolean isType(Class<?> type) {
+		return getType().equals(type);
 	}
 }

@@ -34,7 +34,7 @@ public interface IField {
 
 	void setBoolean(Object instance, boolean value);
 
-	Object get(Object instance);
+	<V> V get(Object instance);
 
 	byte getByte(Object instance);
 
@@ -59,5 +59,7 @@ public interface IField {
 	void setAccessible(boolean accessible);
 
 	<A extends Annotation> A getAnnotation(Class<A> annotationClass);
+
+	boolean isType(Class<?> type);
 
 }
