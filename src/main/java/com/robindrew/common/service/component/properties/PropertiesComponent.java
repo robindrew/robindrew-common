@@ -4,6 +4,10 @@ import static com.robindrew.common.properties.map.CompositePropertyMap.newCompos
 
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.robindrew.common.io.Resources;
 import com.robindrew.common.properties.PropertiesReader;
 import com.robindrew.common.properties.map.IPropertyMap;
 import com.robindrew.common.properties.map.PropertyMap;
@@ -18,6 +22,8 @@ import com.robindrew.common.util.Java;
  */
 public class PropertiesComponent extends AbstractIdleComponent {
 
+	private static final Logger log = LoggerFactory.getLogger(PropertiesComponent.class);
+
 	private static final IProperty<String> propertiesPath = new StringProperty("service.properties.path");
 
 	private static final String DEFAULT_PATH_PREFIX = "config/instance";
@@ -27,8 +33,7 @@ public class PropertiesComponent extends AbstractIdleComponent {
 	protected void startupComponent() throws Exception {
 
 		// Load the service properties
-		String path = getPath();
-		Map<String, String> map = PropertiesReader.readFromResource(path);
+		Map<String, String> map = loadServiceProperties();
 
 		// Build the new global property map
 		if (!map.isEmpty()) {
@@ -38,16 +43,30 @@ public class PropertiesComponent extends AbstractIdleComponent {
 		}
 	}
 
-	private String getPath() {
+	private Map<String, String> loadServiceProperties() {
+
+		// Properties file specified on command line?
 		String path = propertiesPath.get(null);
 		if (path != null) {
-			return path;
+			log.info("Loading properties from specified " + path);
+			return PropertiesReader.readFromResource(path);
 		}
 
-		int instance = Services.getServiceInstance();
+		// Default resource path
+		String basePath = DEFAULT_PATH_PREFIX + Services.getServiceInstance() + "/";
 
-		// The default path ...
-		return DEFAULT_PATH_PREFIX + instance + "/" + Java.getHostAddress() + DEFAULT_PATH_SUFFIX;
+		// Default to ${host_address}.properties
+		path = basePath + Java.getHostAddress() + DEFAULT_PATH_SUFFIX;
+		if (Resources.exists(path)) {
+			log.info("Loading properties from default path (host-specific) " + path);
+			return PropertiesReader.readFromResource(path);
+		}
+		log.warn("Properties file not found: {}", path);
+
+		// Finally fallback to common.properties
+		path = basePath + "common" + DEFAULT_PATH_SUFFIX;
+		log.info("Loading properties from default path (host-specific) " + path);
+		return PropertiesReader.readFromResource(path);
 	}
 
 	@Override

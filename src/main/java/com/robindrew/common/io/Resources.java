@@ -40,4 +40,14 @@ public class Resources {
 		return com.google.common.io.Resources.asByteSource(resource);
 	}
 
+	public static boolean exists(String resourceName) {
+		Check.notEmpty("resourceName", resourceName);
+		try {
+			URL resource = com.google.common.io.Resources.getResource(resourceName);
+			return resource != null;
+		} catch (IllegalArgumentException e) {
+			return false;
+		}
+	}
+
 }
