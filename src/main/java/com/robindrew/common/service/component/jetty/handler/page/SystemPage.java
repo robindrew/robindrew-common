@@ -164,7 +164,7 @@ public class SystemPage extends AbstractServicePage {
 
 	private String getSystemPercentMemory() {
 		long free = Java.getSystemFreeMemory(1);
-		long total = Java.getSystemFreeMemory(1);
+		long total = Java.getSystemMaxMemory(1);
 		return Strings.percent(total - free, total);
 	}
 
