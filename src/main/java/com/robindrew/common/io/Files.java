@@ -138,6 +138,10 @@ public class Files {
 		return listFiles(directory, recursive, ACCEPT_ALL);
 	}
 
+	public static List<File> listFiles(File directory, boolean recursive, String filenamePattern) {
+		return listFiles(directory, recursive, new PatternFileFilter(filenamePattern));
+	}
+
 	public static List<File> listFiles(File directory, boolean recursive, FileFilter filter) {
 		if (filter == null) {
 			throw new NullPointerException("filter");
