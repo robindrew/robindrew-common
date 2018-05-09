@@ -213,6 +213,27 @@ body { padding-top: 10px; }
 </div>
 </div>
 
+#if($networks)
+<div class="col-md-12">
+<div class="panel panel-info">
+<div class="panel-heading">Network Interfaces</div>
+<table class="table small table-hover table-striped table-bordered">
+#foreach($network in $networks)
+<tr>
+<th>${network.name}</th>
+<th>${network.displayName}</th>
+<td>
+#foreach($address in $network.addressList)
+${address}<br/>
+#end
+</td>
+</tr>
+#end
+</table>
+</div>
+</div>
+#end
+
 <div class="col-md-12">
 <div class="panel panel-danger">
 <div class="panel-heading">System Properties</div>
