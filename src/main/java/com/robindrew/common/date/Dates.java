@@ -8,6 +8,7 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.TimeZone;
@@ -101,6 +102,16 @@ public final class Dates {
 	public static final String formatDate(String pattern, long date) {
 		IDateFormat format = ImmutableDateFormat.getInstance(pattern);
 		return format.format(date);
+	}
+
+	public static String formatDate(String pattern, LocalDate date) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+		return date.format(formatter);
+	}
+
+	public static String formatTime(String pattern, LocalTime time) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+		return time.format(formatter);
 	}
 
 	/**
