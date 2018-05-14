@@ -79,6 +79,16 @@ public class CopyOnWriteMap<K, V> implements Map<K, V> {
 	}
 
 	@Override
+	public V putIfAbsent(K key, V value) {
+		V existing = map.get(key);
+		if (existing != null) {
+			return existing;
+		}
+		put(key, value);
+		return null;
+	}
+
+	@Override
 	public V remove(Object key) {
 		synchronized (this) {
 			Map<K, V> newMap = newMap(map);
