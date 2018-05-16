@@ -1,5 +1,6 @@
 package com.robindrew.common.service.component.logging.logback;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -7,6 +8,8 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 import org.slf4j.LoggerFactory;
+
+import com.google.common.collect.ImmutableList;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
@@ -21,7 +24,7 @@ public class LogbackManager implements LogbackManagerMBean {
 
 	private static List<Logger> getLoggerList() {
 		LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
-		return context.getLoggerList();
+		return ImmutableList.copyOf(context.getLoggerList());
 	}
 
 	private static boolean isRootLogger(Logger logger) {
@@ -29,12 +32,25 @@ public class LogbackManager implements LogbackManagerMBean {
 	}
 
 	private static Logger getLogger(String name) {
-		LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
-		Logger logger = context.getLogger(name);
-		if (logger == null) {
-			throw new IllegalArgumentException("Logger does not exist with name: '" + name + "'");
+		List<Logger> loggerList = getLoggerList();
+		for (Logger logger : loggerList) {
+			if (logger.getName().equals(name)) {
+				return logger;
+			}
 		}
-		return logger;
+		List<Logger> matches = new ArrayList<>();
+		for (Logger logger : loggerList) {
+			if (logger.getName().contains(name)) {
+				matches.add(logger);
+			}
+		}
+		if (matches.size() == 1) {
+			return matches.get(0);
+		}
+		if (matches.size() > 1) {
+			throw new IllegalArgumentException("Too many loggers match given name: '" + name + "'");
+		}
+		throw new IllegalArgumentException("Logger does not exist with name: '" + name + "'");
 	}
 
 	@Override
