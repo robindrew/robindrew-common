@@ -24,10 +24,10 @@ public class BeanAttributePage extends AbstractServicePage {
 	protected void execute(IHttpRequest request, IHttpResponse response, Map<String, Object> dataMap) {
 		super.execute(request, response, dataMap);
 
-		String domain = request.get("domain");
-		String type = request.get("type");
-		String name = request.get("name");
-		String attributeName = request.get("attribute");
+		String domain = request.getString("domain");
+		String type = request.getString("type");
+		String name = request.getString("name");
+		String attributeName = request.getString("attribute");
 
 		BeanServer server = new BeanServer();
 		IBean bean = server.getBean(domain, type, name);

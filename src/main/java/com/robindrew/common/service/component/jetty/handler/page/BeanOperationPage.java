@@ -29,10 +29,10 @@ public class BeanOperationPage extends AbstractServicePage {
 	protected void execute(IHttpRequest request, IHttpResponse response, Map<String, Object> dataMap) {
 		super.execute(request, response, dataMap);
 
-		String domain = request.get("domain");
-		String type = request.get("type");
-		String name = request.get("name");
-		int operationIndex = request.getInt("operation");
+		String domain = request.getString("domain");
+		String type = request.getString("type");
+		String name = request.getString("name");
+		int operationIndex = request.getInteger("operation");
 
 		BeanServer server = new BeanServer();
 		IBean bean = server.getBean(domain, type, name);
@@ -74,7 +74,7 @@ public class BeanOperationPage extends AbstractServicePage {
 		for (int i = 0; i < parameterList.size(); i++) {
 			IBeanParameter parameter = parameterList.get(i);
 			String key = "param" + i + "-" + parameter.getName();
-			String value = request.get(key);
+			String value = request.getString(key);
 			parameters[i] = parseValue(value, parameter);
 		}
 		return parameters;

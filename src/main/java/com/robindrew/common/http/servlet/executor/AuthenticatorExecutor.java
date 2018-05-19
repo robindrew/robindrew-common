@@ -43,8 +43,8 @@ public abstract class AuthenticatorExecutor implements IHttpExecutor {
 			}
 		}
 
-		String username = request.get(getUsernameKey(), "");
-		String password = request.get(getPasswordKey(), "");
+		String username = request.getString(getUsernameKey(), "");
+		String password = request.getString(getPasswordKey(), "");
 		if (username.isEmpty() || password.isEmpty()) {
 			throw new HttpUnauthorizedException();
 		}

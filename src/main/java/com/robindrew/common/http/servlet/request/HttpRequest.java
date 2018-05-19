@@ -24,114 +24,12 @@ public class HttpRequest extends HttpServletRequestWrapper implements IHttpReque
 	}
 
 	@Override
-	public String get(String key) {
-		String value = getRequest().getParameter(key);
-		if (value == null) {
-			throw new IllegalArgumentException("key not found: " + key);
-		}
-		return value;
-	}
-
-	@Override
-	public String get(String key, String defaultValue) {
-		String value = getRequest().getParameter(key);
-		if (value == null) {
-			return defaultValue;
-		}
-		return value;
-	}
-
-	@Override
-	public int getInt(String key) {
-		return Integer.parseInt(get(key));
-	}
-
-	@Override
-	public int getInt(String key, int defaultValue) {
-		if (!exists(key)) {
-			return defaultValue;
-		}
-		return getInt(key);
-	}
-
-	@Override
-	public long getLong(String key) {
-		return Long.parseLong(get(key));
-	}
-
-	@Override
-	public long getLong(String key, long defaultValue) {
-		if (!exists(key)) {
-			return defaultValue;
-		}
-		return getLong(key);
-	}
-
-	@Override
-	public boolean exists(String key) {
-		return getRequest().getParameter(key) != null;
-	}
-
-	@Override
 	public Map<String, String> getHeaderMap() {
 		Map<String, String> map = new LinkedHashMap<>();
 		for (String name : Collections.list(getHeaderNames())) {
 			map.put(name, getHeader(name));
 		}
 		return map;
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public <V> V getValue(String key) {
-		HttpSession session = getRequest().getSession(false);
-		if (session == null) {
-			throw new IllegalStateException("Session does not exist");
-		}
-		V value = (V) session.getAttribute(key);
-		if (value == null) {
-			throw new IllegalArgumentException("Session does not contain key: '" + key + "'");
-		}
-		return value;
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public <V> V getValue(String key, V defaultValue) {
-		HttpSession session = getRequest().getSession(false);
-		if (session == null) {
-			return defaultValue;
-		}
-		V value = (V) session.getAttribute(key);
-		if (value == null) {
-			return defaultValue;
-		}
-		return value;
-	}
-
-	@Override
-	public void setValue(String key, Object value) {
-		HttpSession session = getRequest().getSession(true);
-		session.setAttribute(key, value);
-	}
-
-	@Override
-	public <E extends Enum<E>> E getEnum(String key, Class<E> enumClass) {
-		String value = get(key);
-		return Enum.valueOf(enumClass, value);
-	}
-
-	@Override
-	public boolean getBoolean(String key) {
-		return Boolean.parseBoolean(get(key));
-	}
-
-	@Override
-	public boolean getBoolean(String key, boolean defaultValue) {
-		if (!exists(key)) {
-			return defaultValue;
-		}
-		return getBoolean(key);
 	}
 
 	@Override
@@ -146,16 +44,166 @@ public class HttpRequest extends HttpServletRequestWrapper implements IHttpReque
 	}
 
 	@Override
+	public void set(String key, Object value) {
+		HttpSession session = getRequest().getSession(true);
+		session.setAttribute(key, value);
+	}
+
+	@Override
+	public Object get(String key, Object defaultValue) {
+
+		// Firstly look at the parameters
+		Object parameter = getRequest().getParameter(key);
+		if (parameter != null) {
+			return parameter;
+		}
+
+		// Next take a look at the session attributes
+		HttpSession session = getRequest().getSession(false);
+		parameter = session.getAttribute(key);
+		if (parameter != null) {
+			return parameter;
+		}
+
+		// Return the default value
+		return defaultValue;
+	}
+
+	@Override
+	public Object get(String key) {
+		Object value = get(key, null);
+		if (value == null) {
+			throw new IllegalArgumentException("key not found: " + key);
+		}
+		return value;
+	}
+
+	@Override
+	public boolean exists(String key) {
+		return get(key, null) != null;
+	}
+
+	@Override
+	public String getString(String key) {
+		String value = getString(key, null);
+		if (value == null) {
+			throw new IllegalArgumentException("key not found: " + key);
+		}
+		return value;
+	}
+
+	@Override
+	public String getString(String key, String defaultValue) {
+		Object value = get(key, null);
+		if (value == null) {
+			return defaultValue;
+		}
+		return value.toString();
+	}
+
+	@Override
 	public BigDecimal getBigDecimal(String key) {
-		return new BigDecimal(get(key));
+		BigDecimal value = getBigDecimal(key, null);
+		if (value == null) {
+			throw new IllegalArgumentException("key not found: " + key);
+		}
+		return value;
 	}
 
 	@Override
 	public BigDecimal getBigDecimal(String key, BigDecimal defaultValue) {
-		if (!exists(key)) {
+		Object value = get(key, null);
+		if (value == null) {
 			return defaultValue;
 		}
-		return getBigDecimal(key);
+		if (value instanceof BigDecimal) {
+			return (BigDecimal) value;
+		}
+		return new BigDecimal(value.toString());
 	}
 
+	@Override
+	public Boolean getBoolean(String key) {
+		Boolean value = getBoolean(key, null);
+		if (value == null) {
+			throw new IllegalArgumentException("key not found: " + key);
+		}
+		return value;
+	}
+
+	@Override
+	public Boolean getBoolean(String key, Boolean defaultValue) {
+		Object value = get(key, null);
+		if (value == null) {
+			return defaultValue;
+		}
+		if (value instanceof Boolean) {
+			return (Boolean) value;
+		}
+		return Boolean.parseBoolean(value.toString());
+	}
+
+	@Override
+	public Integer getInteger(String key) {
+		Integer value = getInteger(key, null);
+		if (value == null) {
+			throw new IllegalArgumentException("key not found: " + key);
+		}
+		return value;
+	}
+
+	@Override
+	public Integer getInteger(String key, Integer defaultValue) {
+		Object value = get(key, null);
+		if (value == null) {
+			return defaultValue;
+		}
+		if (value instanceof Integer) {
+			return (Integer) value;
+		}
+		return Integer.parseInt(value.toString());
+	}
+
+	@Override
+	public Long getLong(String key) {
+		Long value = getLong(key, null);
+		if (value == null) {
+			throw new IllegalArgumentException("key not found: " + key);
+		}
+		return value;
+	}
+
+	@Override
+	public Long getLong(String key, Long defaultValue) {
+		Object value = get(key, null);
+		if (value == null) {
+			return defaultValue;
+		}
+		if (value instanceof Long) {
+			return (Long) value;
+		}
+		return Long.parseLong(value.toString());
+	}
+
+	@Override
+	public <E extends Enum<E>> E getEnum(Class<E> enumClass, String key) {
+		E value = getEnum(enumClass, key, null);
+		if (value == null) {
+			throw new IllegalArgumentException("key not found: " + key);
+		}
+		return value;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <E extends Enum<E>> E getEnum(Class<E> enumClass, String key, E defaultValue) {
+		Object value = get(key, null);
+		if (value == null) {
+			return defaultValue;
+		}
+		if (value.getClass().equals(enumClass)) {
+			return (E) value;
+		}
+		return Enum.valueOf(enumClass, value.toString());
+	}
 }
