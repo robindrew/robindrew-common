@@ -3,11 +3,11 @@ package com.robindrew.common.net.connection;
 import java.net.ConnectException;
 import java.net.Socket;
 import java.net.SocketAddress;
-import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.base.Optional;
 import com.robindrew.common.date.UnitTime;
 import com.robindrew.common.util.Threads;
 
@@ -17,7 +17,7 @@ public class SocketConnector implements ISocketConnector {
 
 	private static final int INFINITE = 0;
 
-	private Optional<UnitTime> retryFrequency = Optional.empty();
+	private Optional<UnitTime> retryFrequency = Optional.absent();
 	private int retryCount = INFINITE;
 
 	public void setRetryFrequency(UnitTime frequency) {

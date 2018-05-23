@@ -1,6 +1,6 @@
 package com.robindrew.common.http.servlet.executor;
 
-import java.util.Optional;
+import com.google.common.base.Optional;
 
 public interface IAuthenticator {
 
