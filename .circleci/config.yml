@@ -3,14 +3,14 @@ jobs:
   build:
     working_directory: ~/robindrew-common
     steps:
-	  - checkout
-	  - restore_cache:
+      - checkout
+      - restore_cache:
           key: robindrew-common-{{ checksum "pom.xml" }}
-	  - run: mvn dependency:go-offline
-	  - save_cache:
+      - run: mvn dependency:go-offline
+      - save_cache:
           paths:
             - ~/.m2
           key: robindrew-common-{{ checksum "pom.xml" }}
-	  - run: mvn package
-	  - store_artifacts:
+      - run: mvn package
+      - store_artifacts:
           path: target/robindrew-common-0.0.1-SNAPSHOT.jar
