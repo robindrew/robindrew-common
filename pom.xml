@@ -6,6 +6,13 @@
 	<artifactId>robindrew-common</artifactId>
 	<version>3.1</version>
 	<build>
+		<extensions>
+			<extension>
+				<groupId>io.packagecloud.maven.wagon</groupId>
+				<artifactId>maven-packagecloud-wagon</artifactId>
+				<version>0.0.4</version>
+			</extension>
+		</extensions>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -210,6 +217,15 @@
 			<artifactId>httpcore</artifactId>
 			<version>4.4.5</version>
 		</dependency>
-
 	</dependencies>
+	<distributionManagement>
+		<repository>
+			<id>packagecloud-travis</id>
+			<url>packagecloud+https://packagecloud.io/robindrew/opensource</url>
+		</repository>
+		<snapshotRepository>
+			<id>packagecloud-travis</id>
+			<url>packagecloud+https://packagecloud.io/robindrew/opensource</url>
+		</snapshotRepository>
+	</distributionManagement>
 </project>
