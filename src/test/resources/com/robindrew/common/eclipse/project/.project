@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
 	<name>robindrew-common</name>
+	<comment></comment>
+	<projects>
+	</projects>
 	<buildSpec>
 		<buildCommand>
 			<name>org.eclipse.jdt.core.javabuilder</name>
@@ -11,4 +14,10 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<variableList>
+		<variable>
+			<name>NAME</name>
+			<value>file:/C:/development/repository/git/robindrew-public/robindrew-common/src/main/eclipse/RobinDrew.Templates.xml</value>
+		</variable>
+	</variableList>
 </projectDescription>
