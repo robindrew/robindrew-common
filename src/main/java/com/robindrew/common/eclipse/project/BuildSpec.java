@@ -7,4 +7,8 @@ public class BuildSpec {
 	@Element
 	private BuildCommand buildCommand;
 
+	public BuildCommand getBuildCommand() {
+		return buildCommand;
+	}
+
 }

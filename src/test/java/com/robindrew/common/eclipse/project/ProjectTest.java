@@ -1,7 +1,6 @@
 package com.robindrew.common.eclipse.project;
 
-import java.io.File;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class ProjectTest {
@@ -10,6 +9,7 @@ public class ProjectTest {
 	public void readProjectFile() {
 
 		Project project = Project.fromResource("com/robindrew/common/eclipse/project/.project");
-		System.out.println(project);
+
+		Assert.assertEquals("robindrew-common", project.getName());
 	}
 }
