@@ -1,6 +1,8 @@
 package com.robindrew.common.io;
 
 import static com.google.common.base.Charsets.UTF_8;
+import static com.robindrew.common.codec.MessageDigestEncoder.MD5;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -37,8 +39,10 @@ import com.google.common.io.CharSource;
 import com.google.common.io.CharStreams;
 import com.google.common.io.LineProcessor;
 import com.google.common.io.PatternFilenameFilter;
+import com.robindrew.common.codec.MessageDigestEncoder;
 import com.robindrew.common.util.Java;
 import com.robindrew.common.util.SystemProperties;
+import com.robindrew.common.util.Threads;
 
 public class Files {
 
@@ -304,4 +308,38 @@ public class Files {
 		}
 		return relativePath;
 	}
+
+	public static void deleteFile(File file) {
+		while (file.exists()) {
+			if (!file.delete()) {
+				Threads.sleep(5, MILLISECONDS);
+			}
+		}
+	}
+
+	public static void deleteContents(File directory, boolean includeDirectory) {
+		if (!directory.exists()) {
+			return;
+		}
+		if (!directory.isDirectory()) {
+			throw new IllegalArgumentException("not a directory: " + directory);
+		}
+		File[] files = directory.listFiles();
+		for (File file : files) {
+			if (file.isDirectory()) {
+				deleteContents(directory, true);
+			} else {
+				deleteFile(file);
+			}
+		}
+
+		if (includeDirectory) {
+			deleteFile(directory);
+		}
+	}
+
+	public static byte[] readToMd5(File file) {
+		return new MessageDigestEncoder(MD5).encodeToBytes(file);
+	}
+
 }

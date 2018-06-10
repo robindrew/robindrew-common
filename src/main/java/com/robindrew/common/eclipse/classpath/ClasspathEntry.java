@@ -8,6 +8,10 @@ import com.robindrew.common.xml.simple.SimpleWriter;
 @Root(name = "classpathentry")
 public class ClasspathEntry {
 
+	public static final String KIND_SOURCE = "src";
+	public static final String KIND_VARIABLE = "var";
+	public static final String KIND_OUTPUT = "output";
+
 	@Attribute
 	private String kind;
 	@Attribute
@@ -16,6 +20,8 @@ public class ClasspathEntry {
 	private String sourcepath;
 	@Attribute(required = false)
 	private Boolean exported;
+	@Attribute(required = false)
+	private Boolean combineaccessrules;
 
 	public String getKind() {
 		return kind;
@@ -31,6 +37,10 @@ public class ClasspathEntry {
 
 	public Boolean getExported() {
 		return exported;
+	}
+
+	public Boolean getCombineAccessRules() {
+		return combineaccessrules;
 	}
 
 	public void setSourcepath(String sourcepath) {
@@ -52,6 +62,18 @@ public class ClasspathEntry {
 	@Override
 	public String toString() {
 		return new SimpleWriter().writeToString(this);
+	}
+
+	public boolean isSource() {
+		return getKind().equals(KIND_SOURCE);
+	}
+
+	public boolean isProjectSource() {
+		return getPath().startsWith("/");
+	}
+
+	public boolean isTestSource() {
+		return getPath().contains("/test/");
 	}
 
 }

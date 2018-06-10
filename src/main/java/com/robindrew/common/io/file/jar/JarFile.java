@@ -5,6 +5,7 @@ import static com.robindrew.common.io.Files.listContents;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.Collection;
 import java.util.List;
 import java.util.jar.Attributes;
 import java.util.jar.JarEntry;
@@ -120,19 +121,28 @@ public class JarFile {
 		}
 
 		// Build the jar
+		writeFromFiles(files);
+	}
+
+	public int writeFromFiles(Collection<? extends File> files) {
+		Check.notEmpty("files", files);
+
+		// Build the jar
 		try (JarOutputStream output = new JarOutputStream(new FileOutputStream(file), manifest)) {
 
+			int fileCount = 0;
 			for (File file : files) {
-				writeJarEntry(output, "", file);
+				fileCount += writeJarEntry(output, "", file, 0);
 			}
 			output.finish();
 
+			return fileCount;
 		} catch (Exception e) {
 			throw Java.propagate(e);
 		}
 	}
 
-	private void writeJarEntry(JarOutputStream jar, String path, File file) throws Exception {
+	private int writeJarEntry(JarOutputStream jar, String path, File file, int fileCount) throws Exception {
 
 		// Directory
 		if (file.isDirectory()) {
@@ -145,12 +155,15 @@ public class JarFile {
 				JarEntry entry = new JarEntry(path);
 				jar.putNextEntry(entry);
 				jar.closeEntry();
+				fileCount++;
 			}
 
 			// Build JAR from contents
 			for (File child : Files.listContents(file)) {
-				writeJarEntry(jar, path, child);
+				fileCount += writeJarEntry(jar, path, child, 0);
 			}
+
+			return fileCount;
 		}
 
 		// Regular file
@@ -168,6 +181,8 @@ public class JarFile {
 			contents.copyTo(jar);
 			jar.flush();
 			jar.closeEntry();
+
+			return fileCount + 1;
 		}
 	}
 

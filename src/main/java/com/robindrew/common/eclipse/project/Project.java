@@ -21,6 +21,8 @@ public class Project {
 		return new SimpleReader().readResource(Project.class, resource);
 	}
 
+	public static final String FILENAME = ".project";
+
 	@Element
 	private String name;
 	@Element(required = false)
@@ -33,6 +35,11 @@ public class Project {
 	private ArrayList<String> natures = new ArrayList<>();
 	@ElementList(required = false, entry = "variable")
 	private ArrayList<Variable> variableList = new ArrayList<>();
+
+	@ElementList(required = false, entry = "linkedResource")
+	private ArrayList<String> linkedResources = new ArrayList<>();
+	@ElementList(required = false, entry = "filteredResource")
+	private ArrayList<String> filteredResources = new ArrayList<>();
 
 	public String getName() {
 		return name;

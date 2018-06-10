@@ -19,6 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.regex.Pattern;
 
+import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -518,5 +519,9 @@ public class Strings {
 		char[] array = new char[builder.length()];
 		builder.getChars(0, array.length, array, 0);
 		return array;
+	}
+
+	public static String hex(byte[] bytes) {
+		return Hex.encodeHexString(bytes);
 	}
 }
