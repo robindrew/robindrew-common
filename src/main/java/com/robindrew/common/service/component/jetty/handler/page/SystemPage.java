@@ -9,13 +9,18 @@ import static com.robindrew.common.service.component.stats.StatsComponent.SYSTEM
 import java.lang.management.BufferPoolMXBean;
 import java.lang.management.ManagementFactory;
 import java.net.NetworkInterface;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,8 +29,10 @@ import com.robindrew.common.http.servlet.executor.IVelocityHttpContext;
 import com.robindrew.common.http.servlet.request.IHttpRequest;
 import com.robindrew.common.http.servlet.response.IHttpResponse;
 import com.robindrew.common.service.Services;
+import com.robindrew.common.service.component.jetty.handler.page.system.FileRootView;
 import com.robindrew.common.service.component.jetty.handler.page.system.MemoryStats;
 import com.robindrew.common.service.component.jetty.handler.page.system.NetworkInterfaceView;
+import com.robindrew.common.service.component.jetty.handler.page.system.ThreadView;
 import com.robindrew.common.service.component.stats.IStatsCache;
 import com.robindrew.common.service.component.stats.StatsInstantSet;
 import com.robindrew.common.text.Strings;
@@ -93,11 +100,35 @@ public class SystemPage extends AbstractServicePage {
 		}
 
 		setNetworkInterfaces(dataMap);
+
+		setThreads(dataMap);
+
+		setFileRoots(dataMap);
+	}
+
+	private void setFileRoots(Map<String, Object> dataMap) {
+		Set<FileRootView> views = new TreeSet<>();
+		FileSystem fileSystem = FileSystems.getDefault();
+		for (Path root : fileSystem.getRootDirectories()) {
+			views.add(new FileRootView(root));
+		}
+		dataMap.put("fileRoots", views);
+	}
+
+	private void setThreads(Map<String, Object> dataMap) {
+		Set<ThreadView> views = new TreeSet<>();
+		Map<Thread, StackTraceElement[]> threadToTraceMap = Thread.getAllStackTraces();
+		for (Entry<Thread, StackTraceElement[]> entry : threadToTraceMap.entrySet()) {
+			Thread thread = entry.getKey();
+			StackTraceElement[] elements = entry.getValue();
+			views.add(new ThreadView(thread, elements));
+		}
+		dataMap.put("threads", views);
 	}
 
 	private void setNetworkInterfaces(Map<String, Object> dataMap) {
+		List<NetworkInterfaceView> views = new ArrayList<>();
 		try {
-			List<NetworkInterfaceView> views = new ArrayList<>();
 			Enumeration<NetworkInterface> nets = NetworkInterface.getNetworkInterfaces();
 			for (NetworkInterface network : Collections.list(nets)) {
 				NetworkInterfaceView view = new NetworkInterfaceView(network);
@@ -106,10 +137,10 @@ public class SystemPage extends AbstractServicePage {
 				}
 				views.add(view);
 			}
-			dataMap.put("networks", views);
 		} catch (Exception e) {
 			log.info("Unable to list network interfaces", e);
 		}
+		dataMap.put("networks", views);
 	}
 
 	private void setJavaHeapStats(IStatsCache stats, Map<String, Object> dataMap) {

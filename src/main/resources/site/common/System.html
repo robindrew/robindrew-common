@@ -109,8 +109,15 @@ function drawSystemMemoryAreaChart() {
 </script>
 
 <style>
-body { padding-top: 10px; }
-.top-spacer {padding-top: 10px; }]
+body {
+	padding-top: 10px;
+}
+.top-spacer {
+	padding-top: 10px;
+}
+.pointer {
+	cursor: pointer;
+}
 </style>
 
 
@@ -145,6 +152,8 @@ body { padding-top: 10px; }
 <p>This page gives details about the <b>Operating System</b> and the current <b>Java Process</b>.</p>
 </div>
 
+
+<!-- JAVA PROCESS -->
 <div class="col-md-6">
 <div class="panel panel-info">
 <div class="panel-heading">Java Process</div>
@@ -161,6 +170,8 @@ body { padding-top: 10px; }
 </div>
 </div>
 
+
+<!-- OPERATING SYSTEM -->
 <div class="col-md-6">
 <div class="panel panel-warning">
 <div class="panel-heading">Operating System</div>
@@ -173,7 +184,22 @@ body { padding-top: 10px; }
 </div>
 </div>
 
+
+<!-- TABS -->
 <div class="col-md-12">
+<ul class="nav nav-pills">
+<li role="presentation" class="active pointer"><a id="Memory_Tab">Memory</a></li>
+<li role="presentation" class="pointer"><a id="Network_Tab">Network</a></li>
+<li role="presentation" class="pointer"><a id="Properties_Tab">Properties</a></li>
+<li role="presentation" class="pointer"><a id="Thread_Tab">Threads</a></li>
+<li role="presentation" class="pointer"><a id="FileSystem_Tab">File System</a></li>
+</ul>
+<br/>
+</div>
+
+
+<!-- MEMORY -->
+<div class="col-md-12 Memory_Content">
 <div class="panel panel-success">
 <div class="panel-heading">Memory</div>
 <table class="table small table-hover table-striped table-bordered">
@@ -213,8 +239,9 @@ body { padding-top: 10px; }
 </div>
 </div>
 
-#if($networks)
-<div class="col-md-12">
+
+<!-- NETWORK -->
+<div class="col-md-12 Network_Content">
 <div class="panel panel-info">
 <div class="panel-heading">Network Interfaces</div>
 <table class="table small table-hover table-striped table-bordered">
@@ -232,9 +259,10 @@ ${address}<br/>
 </table>
 </div>
 </div>
-#end
 
-<div class="col-md-12">
+
+<!-- SYSTEM PROPERTIES -->
+<div class="col-md-12 Properties_Content">
 <div class="panel panel-danger">
 <div class="panel-heading">System Properties</div>
 <table class="table small table-hover table-striped table-bordered">
@@ -248,8 +276,10 @@ ${address}<br/>
 </div>
 </div>
 
-<div class="col-md-12">
-<div class="panel panel-warning">
+
+<!-- ENVIRONMENT -->
+<div class="col-md-12 Properties_Content">
+<div class="panel panel-danger">
 <div class="panel-heading">Environment Properties</div>
 <table class="table small table-hover table-striped table-bordered">
 #foreach($entry in $envProperties.entrySet())
@@ -262,6 +292,55 @@ ${address}<br/>
 </div>
 </div>
 
+
+<!-- THREADS -->
+<div class="col-md-12 Thread_Content">
+<div class="panel panel-warning">
+<div class="panel-heading">Threads</div>
+<table class="table small table-hover table-striped table-bordered">
+#foreach($thread in $threads)
+<tr>
+<th rowspan="2">${thread.id}</th>
+<th>${thread.state}</th>
+<th>${thread.priority}</th>
+<th>${thread.name} #if($thread.daemon) (Daemon) #end</th>
+</tr>
+<tr>
+<td colspan="3">${thread.stackTrace}</td>
+</tr>
+#end
+</table>
+</div>
+</div>
+
+
+<!-- FILE SYSTEM -->
+<div class="col-md-12 FileSystem_Content">
+<div class="panel panel-success">
+<div class="panel-heading">File System</div>
+<table class="table small table-hover table-striped table-bordered">
+<tr>
+<th>&nbsp;</th>
+<th>Percent</th>
+<th>Used</th>
+<th>Limit</th>
+</tr>
+#foreach($fileRoot in $fileRoots)
+<tr>
+<th>${fileRoot.name}</th>
+<td>${fileRoot.percent}</td>
+<td>${fileRoot.used}</td>
+<td>${fileRoot.capacity}</td>
+</tr>
+#end
+</table>
+</div>
+</div>
+
+
+
+
+
 <!-- END ROW -->
 </div>
 
@@ -269,6 +348,54 @@ ${address}<br/>
 </div>
 
 
+<script>
+$(document).ready(function(){
+   	$(".Network_Content").hide();
+    $(".Properties_Content").hide();
+    $(".Thread_Content").hide();
+    $(".FileSystem_Content").hide();
+
+    $(".nav-pills a").click(function(){
+        $(this).tab('show');
+    });
+
+    $("#Memory_Tab").click(function(){
+       $(".Network_Content").hide();
+       $(".Properties_Content").hide();
+       $(".Thread_Content").hide();
+       $(".FileSystem_Content").hide();
+       $(".Memory_Content").show();
+    });
+    $("#Network_Tab").click(function(){
+       $(".Memory_Content").hide();
+       $(".Properties_Content").hide();
+       $(".Thread_Content").hide();
+       $(".FileSystem_Content").hide();
+       $(".Network_Content").show();
+    });
+    $("#Properties_Tab").click(function(){
+       $(".Memory_Content").hide();
+       $(".Network_Content").hide();
+       $(".Thread_Content").hide();
+       $(".FileSystem_Content").hide();
+       $(".Properties_Content").show();
+    });
+    $("#Thread_Tab").click(function(){
+       $(".Memory_Content").hide();
+       $(".Network_Content").hide();
+       $(".Properties_Content").hide();
+       $(".FileSystem_Content").hide();
+       $(".Thread_Content").show();
+    });
+    $("#FileSystem_Tab").click(function(){
+       $(".Memory_Content").hide();
+       $(".Network_Content").hide();
+       $(".Properties_Content").hide();
+       $(".Thread_Content").hide();
+       $(".FileSystem_Content").show();
+    });
+});
+</script>
 
 </body>
 </html>
