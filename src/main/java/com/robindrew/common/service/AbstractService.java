@@ -39,18 +39,33 @@ public abstract class AbstractService extends AbstractIdleService {
 		checkFileEncoding();
 
 		// The name
-		String serviceName = getClass().getSimpleName();
-		if (!serviceName.endsWith("Service")) {
-			throw new IllegalStateException("Class name must end with 'Service': " + serviceName);
-		}
-		serviceName = serviceName.substring(0, serviceName.lastIndexOf("Service"));
-		this.name = Services.setServiceName(serviceName);
+		this.name = checkServiceName();
 
 		// The port
 		this.port = Services.getServicePort();
 
 		// The instance
 		this.instance = Services.getServiceInstance();
+
+		// Log file
+		checkLogFile();
+	}
+
+	private String checkServiceName() {
+
+		// Build the service name
+		String serviceName = getClass().getSimpleName();
+		if (!serviceName.endsWith("Service")) {
+			throw new IllegalStateException("Class name must end with 'Service': " + getClass().getName());
+		}
+		serviceName = serviceName.substring(0, serviceName.lastIndexOf("Service"));
+
+		// Check it matches
+		return Services.checkServiceName(serviceName);
+	}
+
+	private void checkLogFile() {
+		Services.getLogDir();
 	}
 
 	/**

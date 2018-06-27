@@ -19,15 +19,12 @@ public class LoggingComponent extends AbstractIdleComponent {
 
 		// Logback
 		registry.register(logback);
-		// server.registerMBean(logback, new ObjectName("com.robindrew.common.logging:type=LogManager,name=Logback"));
 
 		// Log4j
 		registry.register(log4j);
-		// server.registerMBean(log4j, new ObjectName("com.robindrew.common.logging:type=LogManager,name=Log4j"));
 
 		// Logging
 		registry.register(logging);
-		// server.registerMBean(logging, new ObjectName("com.robindrew.common.logging:type=LogManager,name=Logging"));
 	}
 
 	@Override

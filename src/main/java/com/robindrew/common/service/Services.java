@@ -18,6 +18,8 @@ public class Services {
 	private static final IProperty<Integer> serviceInstance = new IntegerProperty("service.instance").defaultValue(1);
 	/** The service environment. */
 	private static final IProperty<String> serviceEnv = new StringProperty("service.env").defaultValue("DEV");
+	/** The service log file. */
+	private static final StringProperty serviceLogDir = new StringProperty("service.log.dir");
 
 	private Services() {
 		// Utility class - private constructor.
@@ -45,6 +47,13 @@ public class Services {
 	}
 
 	/**
+	 * Returns the service log directory.
+	 */
+	public static String getLogDir() {
+		return serviceLogDir.get();
+	}
+
+	/**
 	 * Returns a port offset to the base service port.
 	 * @param offset the offset (0-9)
 	 * @return the port.
@@ -63,9 +72,12 @@ public class Services {
 		return serviceInstance.get();
 	}
 
-	public static String setServiceName(String name) {
-		Check.notEmpty("name", name);
-		serviceName.defaultValue(name);
-		return getServiceName();
+	public static String checkServiceName(String expected) {
+		Check.notEmpty("expected", expected);
+		String actual = serviceName.get();
+		if (!actual.equals(expected)) {
+			throw new IllegalStateException("Service name, expected: '" + expected + "', but was: '" + actual + "'");
+		}
+		return actual;
 	}
 }
