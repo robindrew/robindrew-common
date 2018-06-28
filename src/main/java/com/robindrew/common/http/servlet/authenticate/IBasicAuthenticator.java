@@ -9,12 +9,6 @@ public interface IBasicAuthenticator {
 	boolean isEnabled();
 
 	/**
-	 * Enable or disable authentication.
-	 * @param enable true to enable.
-	 */
-	void setEnabled(boolean enable);
-
-	/**
 	 * Returns true if and only if the authentication details are valid and authorized.
 	 * @param authentication the authentication.
 	 * @return true if authorized.

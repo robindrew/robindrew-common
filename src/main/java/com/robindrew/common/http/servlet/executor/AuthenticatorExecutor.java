@@ -1,5 +1,7 @@
 package com.robindrew.common.http.servlet.executor;
 
+import static com.robindrew.common.dependency.DependencyFactory.getDependency;
+
 import java.util.List;
 
 import com.google.common.base.Optional;
@@ -8,12 +10,6 @@ import com.robindrew.common.http.servlet.response.IHttpResponse;
 import com.robindrew.common.http.servlet.response.exception.HttpUnauthorizedException;
 
 public abstract class AuthenticatorExecutor implements IHttpExecutor {
-
-	private volatile IAuthenticator authenticator;
-
-	protected IAuthenticator getAuthenticator() {
-		return authenticator;
-	}
 
 	protected String getTokenKey() {
 		return "AUTH_TOKEN";
@@ -28,7 +24,7 @@ public abstract class AuthenticatorExecutor implements IHttpExecutor {
 	}
 
 	protected void authenticate(IHttpRequest request, IHttpResponse response) {
-		IAuthenticator authenticator = getAuthenticator();
+		IAuthenticator authenticator = getDependency(IAuthenticator.class);
 
 		// Authentication succeeds if no authenticator set
 		if (authenticator == null) {

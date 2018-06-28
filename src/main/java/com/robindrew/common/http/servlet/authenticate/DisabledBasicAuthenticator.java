@@ -8,10 +8,6 @@ public class DisabledBasicAuthenticator implements IBasicAuthenticator {
 	}
 
 	@Override
-	public void setEnabled(boolean enable) {
-	}
-
-	@Override
 	public boolean authenticate(IBasicAuthentication authentication) {
 		return true;
 	}

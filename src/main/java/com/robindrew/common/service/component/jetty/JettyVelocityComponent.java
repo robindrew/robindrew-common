@@ -4,6 +4,7 @@ import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.session.SessionHandler;
 
 import com.google.common.base.Supplier;
+import com.robindrew.common.http.servlet.authenticate.BasicAuthenticator;
 import com.robindrew.common.http.servlet.executor.IVelocityHttpContext;
 import com.robindrew.common.http.servlet.executor.VelocityHttpContext;
 import com.robindrew.common.http.servlet.filter.HostHttpRequestFilter;
@@ -30,10 +31,11 @@ public abstract class JettyVelocityComponent extends AbstractJettyComponent {
 		return context.get();
 	}
 
-	private IVelocityHttpContext createContext() {
+	protected IVelocityHttpContext createContext() {
 		ITemplateLocator locator = getTemplateLocator().get();
 		VelocityHttpContext context = new VelocityHttpContext(locator);
 		context.setFilter(new HostHttpRequestFilter());
+		context.setAuthenticator(new BasicAuthenticator());
 		return context;
 	}
 
