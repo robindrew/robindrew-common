@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpSession;
 
+import com.robindrew.common.text.parser.IStringParser;
+
 public class HttpRequest extends HttpServletRequestWrapper implements IHttpRequest {
 
 	public HttpRequest(HttpServletRequest request) {
@@ -205,5 +207,28 @@ public class HttpRequest extends HttpServletRequestWrapper implements IHttpReque
 			return (E) value;
 		}
 		return Enum.valueOf(enumClass, value.toString());
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <V> V getValue(IStringParser<V> parser, String key) {
+		Object value = get(key);
+		if (value instanceof String) {
+			return parser.parse((String) value);
+		}
+		return (V) value;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <V> V getValue(IStringParser<V> parser, String key, V defaultValue) {
+		Object value = get(key, null);
+		if (value == null) {
+			return defaultValue;
+		}
+		if (value instanceof String) {
+			return parser.parse((String) value);
+		}
+		return (V) value;
 	}
 }

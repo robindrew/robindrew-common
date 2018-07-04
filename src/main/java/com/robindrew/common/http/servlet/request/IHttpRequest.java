@@ -6,6 +6,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.robindrew.common.text.parser.IStringParser;
+
 public interface IHttpRequest extends HttpServletRequest {
 
 	Map<String, String> getHeaderMap();
@@ -43,5 +45,9 @@ public interface IHttpRequest extends HttpServletRequest {
 	<E extends Enum<E>> E getEnum(Class<E> enumClass, String key);
 
 	<E extends Enum<E>> E getEnum(Class<E> enumClass, String key, E defaultValue);
+
+	<V> V getValue(IStringParser<V> parser, String key);
+
+	<V> V getValue(IStringParser<V> parser, String key, V defaultValue);
 
 }
