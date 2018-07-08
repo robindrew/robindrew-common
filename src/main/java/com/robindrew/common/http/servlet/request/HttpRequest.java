@@ -62,9 +62,11 @@ public class HttpRequest extends HttpServletRequestWrapper implements IHttpReque
 
 		// Next take a look at the session attributes
 		HttpSession session = getRequest().getSession(false);
-		parameter = session.getAttribute(key);
-		if (parameter != null) {
-			return parameter;
+		if (session != null) {
+			parameter = session.getAttribute(key);
+			if (parameter != null) {
+				return parameter;
+			}
 		}
 
 		// Return the default value
