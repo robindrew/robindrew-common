@@ -1,7 +1,10 @@
 package com.robindrew.common.util;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -164,6 +167,17 @@ public class Threads {
 		try {
 			service.shutdown();
 			service.awaitTermination(amount, unit);
+		} catch (Exception e) {
+			throw Java.propagate(e);
+		}
+	}
+
+	public static <F> void drainAndShutdown(ExecutorService service, List<Future<F>> futures, Collection<F> desination) {
+		try {
+			for (Future<F> future : futures) {
+				desination.add(future.get());
+			}
+			service.shutdown();
 		} catch (Exception e) {
 			throw Java.propagate(e);
 		}
