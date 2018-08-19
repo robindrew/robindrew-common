@@ -14,7 +14,7 @@ import com.robindrew.common.util.Java;
 
 public class VelocityResourceLoader extends ResourceLoader {
 
-	private volatile String path = "";
+	private volatile String path = null;
 	private volatile String extension = "template";
 	private volatile boolean caching = false;
 

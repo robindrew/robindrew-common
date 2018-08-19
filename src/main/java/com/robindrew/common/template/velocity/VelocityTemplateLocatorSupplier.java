@@ -14,7 +14,7 @@ public class VelocityTemplateLocatorSupplier implements Supplier<ITemplateLocato
 
 	private Charset inputEncoding = Charsets.UTF_8;
 	private Charset outputEncoding = Charsets.UTF_8;
-	private String path = ".";
+	private String path = null;
 	private boolean caching = true;
 	private String extension = "";
 	private LogChute logChute = new Slf4jLogChute();
@@ -105,7 +105,9 @@ public class VelocityTemplateLocatorSupplier implements Supplier<ITemplateLocato
 		engine.setProperty(RuntimeConstants.RUNTIME_LOG_LOGSYSTEM, logChute);
 		engine.setProperty(RuntimeConstants.RESOURCE_LOADER, "class");
 		engine.setProperty("class.resource.loader.class", VelocityResourceLoader.class.getName());
-		engine.setProperty("class.resource.loader.path", path);
+		if (path != null) {
+			engine.setProperty("class.resource.loader.path", path);
+		}
 		engine.setProperty("class.resource.loader.caching", caching);
 		if (strict) {
 			engine.setProperty("runtime.references.strict", strict);
