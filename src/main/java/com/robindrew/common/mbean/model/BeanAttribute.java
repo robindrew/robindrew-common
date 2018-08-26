@@ -2,6 +2,7 @@ package com.robindrew.common.mbean.model;
 
 import static com.google.common.base.Throwables.getRootCause;
 
+import javax.management.Attribute;
 import javax.management.MBeanAttributeInfo;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
@@ -46,6 +47,18 @@ public class BeanAttribute implements IBeanAttribute {
 	}
 
 	@Override
+	public void setValue(Object value) {
+		try {
+			MBeanServer server = bean.getServer();
+			ObjectName name = bean.getObjectName();
+			Attribute attr = new Attribute(getName(), value);
+			server.setAttribute(name, attr);
+		} catch (Exception e) {
+			throw Java.propagate(e);
+		}
+	}
+
+	@Override
 	public int compareTo(IBeanAttribute compare) {
 		return getName().compareTo(compare.getName());
 	}
@@ -67,6 +80,16 @@ public class BeanAttribute implements IBeanAttribute {
 			}
 			return false;
 		}
+	}
+
+	@Override
+	public boolean isReadable() {
+		return attribute.isReadable();
+	}
+
+	@Override
+	public boolean isWritable() {
+		return attribute.isWritable();
 	}
 
 }

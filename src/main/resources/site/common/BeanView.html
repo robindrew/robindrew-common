@@ -90,7 +90,7 @@ ${attribute.value}
 <i>not available</i>
 #end
 #else
-<a href="/BeanAttribute?domain=${bean.domain}&type=${bean.type}&name=${beanName}&attribute=${attribute.name}">${attribute.name}</a>
+<a href="/GetBeanAttribute?domain=${bean.domain}&type=${bean.type}&name=${beanName}&attribute=${attribute.name}">${attribute.name}</a>
 #end
 #end
 </td>
@@ -101,6 +101,35 @@ ${attribute.value}
 
 </div>
 </div>
+
+
+#foreach($attribute in $attributes)
+#if($attribute.isWritable())
+<div class="col-md-6">
+<div class="panel panel-info">
+<div class="panel-heading">set${attribute.name}()</div>
+<form id="Form-${attribute.name}" action="/SetBeanAttribute" method="GET">
+<input type="hidden" name="domain" value="${bean.domain}"/>
+<input type="hidden" name="type" value="${bean.type}"/>
+<input type="hidden" name="name" value="${beanName}"/>
+<input type="hidden" name="attribute" value="${attribute.name}"/>
+<table class="table small">
+<tr>
+<th>${attribute.name}</th>
+<th><code>${attribute.typeName}</code></th>
+<td><input type="text" name="value"/></td>
+</tr>
+<tr>
+<td colspan="3">
+<button id="Button-${attribute.name}" type="button" class="btn btn-primary">Execute</button>
+</td>
+</tr>
+</table>
+</form>
+</div>
+</div>
+#end
+#end
 
 
 #foreach($operation in $operations)
@@ -155,8 +184,21 @@ $("#Form-${operation.index}").keypress(function(event) {
     	$("#Form-${operation.index}").submit();
     }
 });
-
 #end
+
+#foreach($attribute in $attributes)
+#if($attribute.isWritable())
+$("#Button-${attribute.name}").click(function() {
+	$("#Form-${attribute.name}").submit();
+});
+$("#Form-${attribute.name}").keypress(function(event) {
+    if (event.which == 13) {
+    	$("#Form-${attribute.name}").submit();
+    }
+});
+#end
+#end
+
 </script>
 </body>
 </html>

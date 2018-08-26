@@ -83,6 +83,10 @@ public class BeanAttributeView {
 		return attribute.isAvailable();
 	}
 
+	public boolean isWritable() {
+		return attribute.isWritable();
+	}
+
 	public Object getValue() {
 		return attribute.getValue();
 	}

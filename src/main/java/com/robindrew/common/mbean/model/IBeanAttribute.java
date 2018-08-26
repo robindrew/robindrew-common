@@ -8,7 +8,13 @@ public interface IBeanAttribute extends Comparable<IBeanAttribute> {
 
 	boolean isAvailable();
 
+	boolean isReadable();
+
+	boolean isWritable();
+
 	Object getValue();
+
+	void setValue(Object value);
 
 	Class<?> getType();
 
