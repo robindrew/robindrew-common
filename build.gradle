@@ -1,0 +1,90 @@
+
+
+// PLUGINS
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'maven'
+
+// ARTIFACT
+version = '1.1.6'
+group = 'com.robindrew.common'
+
+// JAVA VERSION
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+
+// COMPILATION
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+
+// SOURCE FILES (What are our source directories)
+sourceSets {
+	main {
+    	java {
+        	srcDir 'src/main/java'
+        	srcDir 'src/tool/java'
+		}
+		resources {
+			srcDir 'src/main/resources'
+		}
+	}
+}
+
+configurations {
+    deployerJars
+}
+
+
+// ECLIPSE (Generating Eclipse project and classpath)
+eclipse {
+    classpath {
+        downloadJavadoc = false
+        downloadSources = true
+    }
+}
+
+
+// REPOSITORIES (Where to read JAR files from or publish them to)
+repositories {
+   	mavenCentral()
+    maven {
+        url "https://packagecloud.io/priv/e60b7f1130c9b221b61bd910a4dbe0fb485ed248cf7f3435/robindrew/opensource/maven2"
+    }
+}
+
+uploadArchives {
+    repositories.mavenDeployer {
+        configuration = configurations.deployerJars
+        repository(url: "packagecloud+https://packagecloud.io/robindrew/opensource") {
+            authentication(password: mavenPassword)
+        }
+    }
+}
+
+// DEPENDENCIES (Which JAR files to download and host locally)
+dependencies {
+
+	compile group: 'org.slf4j',                 name: 'slf4j-api',         version: '1.7.25'
+	compile group: 'com.google.guava',          name: 'guava',             version: '20.0'
+	compile group: 'com.google.code.gson',      name: 'gson',              version: '2.8.5'
+	compile group: 'org.apache.commons',        name: 'commons-lang3',     version: '3.0'
+	compile group: 'org.apache.velocity',       name: 'velocity',          version: '1.7'
+	compile group: 'org.apache.httpcomponents', name: 'httpclient',        version: '4.5.2'
+	compile group: 'org.simpleframework',       name: 'simple-xml',        version: '2.7.1'
+	compile group: 'org.eclipse.jetty',         name: 'jetty-server',      version: '9.4.8.v20171121'
+	compile group: 'org.slf4j',                 name: 'log4j-over-slf4j',  version: '1.7.25'
+	compile group: 'uk.org.lidalia',            name: 'sysout-over-slf4j', version: '1.0.2'
+	compile group: 'com.thoughtworks.xstream',  name: 'xstream',           version: '1.4.10'
+	compile group: 'commons-codec',             name: 'commons-codec',     version: '1.11'
+	compile group: 'commons-io',                name: 'commons-io',        version: '2.6'
+	compile group: 'ch.qos.logback',            name: 'logback-classic',   version: '1.2.3'
+	compile group: 'org.mockito',               name: 'mockito-core',      version: '2.13.0'
+
+	testCompile group: 'junit',  name: 'junit',  version: '4.4'
+	
+	deployerJars "io.packagecloud.maven.wagon:maven-packagecloud-wagon:0.0.6"
+	
+}
