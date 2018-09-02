@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 
 import com.robindrew.common.lang.IReference;
 import com.robindrew.common.lang.Reference;
-import com.robindrew.common.properties.map.type.IProperty;
 import com.robindrew.common.properties.map.type.IntegerProperty;
 import com.robindrew.common.properties.map.type.StringProperty;
 import com.robindrew.common.service.Services;
@@ -25,14 +24,26 @@ public abstract class AbstractJettyComponent extends AbstractIdleComponent {
 
 	private static final Logger log = LoggerFactory.getLogger(AbstractJettyComponent.class);
 
-	/** The property "jetty.threads". */
-	private static final IProperty<Integer> jettyThreads = new IntegerProperty("jetty.threads").defaultValue(20);
-	/** The property "jetty.port". */
-	private static final IProperty<Integer> jettyPort = new IntegerProperty("jetty.port");
-	/** The property "jetty.host". */
-	private static final IProperty<String> jettyHost = new StringProperty("jetty.host");
-
 	private final IReference<Server> server = new Reference<>();
+
+	public String getPropertyPrefix() {
+		return "jetty";
+	}
+
+	public int getThreads() {
+		String key = getPropertyPrefix() + ".threads";
+		return new IntegerProperty(key).defaultValue(20).get();
+	}
+
+	public int getPort(int defaultPort) {
+		String key = getPropertyPrefix() + ".port";
+		return new IntegerProperty(key).get(defaultPort);
+	}
+
+	public String getHost(String defaultHost) {
+		String key = getPropertyPrefix() + ".host";
+		return new StringProperty(key).get(defaultHost);
+	}
 
 	public Server getServer() {
 		return server.get();
@@ -42,7 +53,7 @@ public abstract class AbstractJettyComponent extends AbstractIdleComponent {
 	protected void startupComponent() throws Exception {
 
 		// Create the thread pool
-		int threads = jettyThreads.get();
+		int threads = getThreads();
 		log.info("[Jetty] threads: {}", threads);
 
 		// Create the jetty server
@@ -72,12 +83,12 @@ public abstract class AbstractJettyComponent extends AbstractIdleComponent {
 		ServerConnector connector = new ServerConnector(server);
 
 		// The port defaults to the primary service port
-		int port = jettyPort.get(Services.getServicePort());
+		int port = getPort(Services.getServicePort());
 		log.info("[Jetty] Port: {}", port);
 		connector.setPort(port);
 
 		// The host is not set by default
-		String host = jettyHost.get(null);
+		String host = getHost(null);
 		if (host != null) {
 			log.info("[Jetty] Host: {}", host);
 			connector.setHost(host);
