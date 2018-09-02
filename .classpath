@@ -82,6 +82,11 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-server/9.4.8.v20171121/719780704f730579644feea9f134d90b9e9f7237/websocket-server-9.4.8.v20171121-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-server/9.4.8.v20171121/c6ae10f65664d90e24dede5dec23098f5f4c3a58/websocket-server-9.4.8.v20171121.jar">
+		<attributes>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-servlet/9.4.8.v20171121/6ef1e65a5af7ab2d79ba6043923affdaeaafb1e5/jetty-servlet-9.4.8.v20171121-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-servlet/9.4.8.v20171121/bbbb9b5de08f468c7b9b3de6aea0b098d2c679b6/jetty-servlet-9.4.8.v20171121.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
@@ -152,12 +157,32 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-servlet/9.4.8.v20171121/506291a3350f2e8489476956d4fa8b58a29f1429/websocket-servlet-9.4.8.v20171121-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-servlet/9.4.8.v20171121/9061f66101a8654ae1a55a3336438473f1b00713/websocket-servlet-9.4.8.v20171121.jar">
+		<attributes>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/javax.servlet/javax.servlet-api/3.1.0/ab3976d4574c48d22dc1abf6a9e8bd0fdf928223/javax.servlet-api-3.1.0-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/javax.servlet/javax.servlet-api/3.1.0/3cd63d075497751784b2fa84be59432f4905bf7c/javax.servlet-api-3.1.0.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-client/9.4.8.v20171121/4d808ddf4528b8666314f266b865ebc8f4c0f676/websocket-client-9.4.8.v20171121-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-client/9.4.8.v20171121/f83fc3fbd52109a57d09b3ef88b715a36e8acdb4/websocket-client-9.4.8.v20171121.jar">
+		<attributes>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-client/9.4.8.v20171121/bf31f6e1035e38f28904cb346dcf682e25368be0/jetty-client-9.4.8.v20171121-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-client/9.4.8.v20171121/e93cac2ce46e81ee8b36288cf7e19d3bac82d536/jetty-client-9.4.8.v20171121.jar">
+		<attributes>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-http/9.4.8.v20171121/5e746cd0ccb732eef0427c8c4b9dcb034e26c61b/jetty-http-9.4.8.v20171121-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-http/9.4.8.v20171121/9879d6c4e37400bf43f0cd4b3c6e34a3ba409864/jetty-http-9.4.8.v20171121.jar">
+		<attributes>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-common/9.4.8.v20171121/faa7caf4cfb6e6a90ebb368339457d0281f85fb5/websocket-common-9.4.8.v20171121-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-common/9.4.8.v20171121/82cd6d9caa68baf6557176159e6e5c37faed0e9b/websocket-common-9.4.8.v20171121.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -197,7 +222,17 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-xml/9.4.8.v20171121/59e30884b43f91ea6715425621ea47368ba0b927/jetty-xml-9.4.8.v20171121-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-xml/9.4.8.v20171121/b0d6f87f580a9bd7fa9aaf9b7448bf63cf0ac34f/jetty-xml-9.4.8.v20171121.jar">
+		<attributes>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-util/9.4.8.v20171121/a74ecb43f96b2e21852f6908604316d7348a16ad/jetty-util-9.4.8.v20171121-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-util/9.4.8.v20171121/d6ec1a1613c7fa72aa6bf5d8c204750afbc3df3b/jetty-util-9.4.8.v20171121.jar">
+		<attributes>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-api/9.4.8.v20171121/3e68cf3965b05f5c81704a6e98bef7f479f8b0b6/websocket-api-9.4.8.v20171121-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-api/9.4.8.v20171121/6d889f9a8b5fd2a573c6d1d518c7e119a6d8c170/websocket-api-9.4.8.v20171121.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>

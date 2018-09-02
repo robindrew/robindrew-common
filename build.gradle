@@ -6,7 +6,7 @@ apply plugin: 'eclipse'
 apply plugin: 'maven'
 
 // ARTIFACT
-version = '1.1.6'
+version = '1.1.7'
 group = 'com.robindrew.common'
 
 // JAVA VERSION
@@ -51,7 +51,7 @@ eclipse {
 repositories {
    	mavenCentral()
     maven {
-        url "https://packagecloud.io/priv/e60b7f1130c9b221b61bd910a4dbe0fb485ed248cf7f3435/robindrew/opensource/maven2"
+        url "https://packagecloud.io/robindrew/opensource/maven2"
     }
 }
 
@@ -67,22 +67,23 @@ uploadArchives {
 // DEPENDENCIES (Which JAR files to download and host locally)
 dependencies {
 
-	compile group: 'org.slf4j',                 name: 'slf4j-api',         version: '1.7.25'
-	compile group: 'com.google.guava',          name: 'guava',             version: '20.0'
-	compile group: 'com.google.code.gson',      name: 'gson',              version: '2.8.5'
-	compile group: 'org.apache.commons',        name: 'commons-lang3',     version: '3.0'
-	compile group: 'org.apache.velocity',       name: 'velocity',          version: '1.7'
-	compile group: 'org.apache.httpcomponents', name: 'httpclient',        version: '4.5.2'
-	compile group: 'org.simpleframework',       name: 'simple-xml',        version: '2.7.1'
-	compile group: 'org.eclipse.jetty',         name: 'jetty-server',      version: '9.4.8.v20171121'
-	compile group: 'org.eclipse.jetty',         name: 'jetty-servlet',     version: '9.4.8.v20171121'
-	compile group: 'org.slf4j',                 name: 'log4j-over-slf4j',  version: '1.7.25'
-	compile group: 'uk.org.lidalia',            name: 'sysout-over-slf4j', version: '1.0.2'
-	compile group: 'com.thoughtworks.xstream',  name: 'xstream',           version: '1.4.10'
-	compile group: 'commons-codec',             name: 'commons-codec',     version: '1.11'
-	compile group: 'commons-io',                name: 'commons-io',        version: '2.6'
-	compile group: 'ch.qos.logback',            name: 'logback-classic',   version: '1.2.3'
-	compile group: 'org.mockito',               name: 'mockito-core',      version: '2.13.0'
+	compile group: 'org.slf4j',                   name: 'slf4j-api',         version: '1.7.25'
+	compile group: 'com.google.guava',            name: 'guava',             version: '20.0'
+	compile group: 'com.google.code.gson',        name: 'gson',              version: '2.8.5'
+	compile group: 'org.apache.commons',          name: 'commons-lang3',     version: '3.0'
+	compile group: 'org.apache.velocity',         name: 'velocity',          version: '1.7'
+	compile group: 'org.apache.httpcomponents'  , name: 'httpclient',        version: '4.5.2'
+	compile group: 'org.simpleframework',         name: 'simple-xml',        version: '2.7.1'
+	compile group: 'org.eclipse.jetty',           name: 'jetty-server',      version: '9.4.8.v20171121'
+	compile group: 'org.eclipse.jetty',           name: 'jetty-servlet',     version: '9.4.8.v20171121'
+	compile group: 'org.slf4j',                   name: 'log4j-over-slf4j',  version: '1.7.25'
+	compile group: 'uk.org.lidalia',              name: 'sysout-over-slf4j', version: '1.0.2'
+	compile group: 'com.thoughtworks.xstream',    name: 'xstream',           version: '1.4.10'
+	compile group: 'commons-codec',               name: 'commons-codec',     version: '1.11'
+	compile group: 'commons-io',                  name: 'commons-io',        version: '2.6'
+	compile group: 'ch.qos.logback',              name: 'logback-classic',   version: '1.2.3'
+	compile group: 'org.mockito',                 name: 'mockito-core',      version: '2.13.0'
+	compile group: 'org.eclipse.jetty.websocket', name: 'websocket-server',  version: '9.4.8.v20171121'
 
 	testCompile group: 'junit',  name: 'junit',  version: '4.4'
 	
