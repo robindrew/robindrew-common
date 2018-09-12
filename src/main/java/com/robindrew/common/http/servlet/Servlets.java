@@ -74,6 +74,13 @@ public class Servlets {
 	}
 
 	/**
+	 * HTTP Response: 400 / Bad Request
+	 */
+	public static final void badRequest(HttpServletResponse response) {
+		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+	}
+
+	/**
 	 * HTTP Response: 404 / Not Found
 	 */
 	public static final void notFound(HttpServletResponse response, String path) {

@@ -49,7 +49,8 @@ eclipse {
 
 // REPOSITORIES (Where to read JAR files from or publish them to)
 repositories {
-   	mavenCentral()
+	mavenLocal()
+    mavenCentral()
     maven {
         url "https://packagecloud.io/robindrew/opensource/maven2"
     }
