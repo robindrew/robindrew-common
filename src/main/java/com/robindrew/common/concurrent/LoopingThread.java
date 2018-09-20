@@ -1,45 +1,116 @@
 package com.robindrew.common.concurrent;
 
+import static com.robindrew.common.util.Check.notEmpty;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicReference;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.robindrew.common.date.UnitTime;
-import com.robindrew.common.util.Check;
-import com.robindrew.common.util.Threads;
 
-public abstract class LoopingThread extends Thread implements AutoCloseable {
+public abstract class LoopingThread implements AutoCloseable, Runnable {
 
-	private final AtomicBoolean closed = new AtomicBoolean(false);
-	private volatile UnitTime pause = new UnitTime(50, MILLISECONDS);
+	private static final Logger log = LoggerFactory.getLogger(LoopingThread.class);
+
+	private final String name;
+	private final AtomicReference<Thread> thread = new AtomicReference<>();
+	private final AtomicBoolean shutdown = new AtomicBoolean(false);
+	private final AtomicBoolean paused = new AtomicBoolean(false);
+	private final AtomicLong interval = new AtomicLong(0);
 
 	public LoopingThread(String name) {
-		super(name);
+		this.name = notEmpty("name", name);
+	}
+
+	public void start() {
+
+		// Sanity checks ...
+		if (!thread.compareAndSet(null, new Thread(this, name))) {
+			throw new IllegalStateException("Thread already started");
+		}
+		if (isShutdown()) {
+			throw new IllegalStateException("Thread is shutdown");
+		}
+
+		// Start!
+		thread.get().start();
 	}
 
 	@Override
 	public void run() {
-		while (!isClosed()) {
-			runOneIteration();
-			Threads.sleep(pause);
+		try {
+			while (!isShutdown()) {
+
+				// Pause?
+				while (isPaused()) {
+					Thread.sleep(50);
+				}
+
+				// Run a single iteration
+				runOneIteration();
+
+				// If there is an interval, sleep
+				Thread.sleep(interval.get());
+			}
+		} catch (InterruptedException ie) {
+			log.warn("Thread Interrupted");
+		} catch (Throwable t) {
+			log.error("Thread Crashed", t);
+		} finally {
+			shutdown();
 		}
 	}
 
-	public UnitTime getPause() {
-		return pause;
+	public long getInterval() {
+		return interval.get();
 	}
 
-	public void setPause(UnitTime pause) {
-		this.pause = Check.notNull("pause", pause);
+	public void setInterval(UnitTime interval) {
+		setInterval(interval.getTime(MILLISECONDS));
 	}
 
-	public boolean isClosed() {
-		return closed.get();
+	public void setInterval(long millis) {
+		if (millis < 0) {
+			throw new IllegalArgumentException("millis=" + millis);
+		}
+		this.interval.set(millis);
+	}
+
+	public boolean isStartedUp() {
+		return thread.get() != null;
+	}
+
+	public boolean isShutdown() {
+		return shutdown.get();
+	}
+
+	public boolean isPaused() {
+		return paused.get();
+	}
+
+	public void pause() {
+		setPaused(true);
+	}
+
+	public void resume() {
+		setPaused(false);
+	}
+
+	public void setPaused(boolean paused) {
+		this.paused.set(paused);
+	}
+
+	public void shutdown() {
+		shutdown.set(true);
 	}
 
 	@Override
 	public void close() {
-		closed.set(true);
+		shutdown();
 	}
 
 	protected abstract void runOneIteration();

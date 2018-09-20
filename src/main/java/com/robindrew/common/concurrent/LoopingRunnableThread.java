@@ -1,6 +1,6 @@
 package com.robindrew.common.concurrent;
 
-import com.robindrew.common.util.Check;
+import static com.robindrew.common.util.Check.notNull;
 
 public class LoopingRunnableThread extends LoopingThread {
 
@@ -8,7 +8,7 @@ public class LoopingRunnableThread extends LoopingThread {
 
 	public LoopingRunnableThread(String name, Runnable runnable) {
 		super(name);
-		this.runnable = Check.notNull("runnable", runnable);
+		this.runnable = notNull("runnable", runnable);
 	}
 
 	@Override

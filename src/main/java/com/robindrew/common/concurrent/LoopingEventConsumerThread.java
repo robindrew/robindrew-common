@@ -28,7 +28,7 @@ public class LoopingEventConsumerThread<E> extends LoopingThread {
 	}
 
 	public void publishEvent(E event) {
-		if (isClosed()) {
+		if (isShutdown()) {
 			throw new IllegalStateException("Thread is closed");
 		}
 		Check.notNull("event", event);
@@ -36,7 +36,7 @@ public class LoopingEventConsumerThread<E> extends LoopingThread {
 	}
 
 	public void publishEvents(Collection<? extends E> events) {
-		if (isClosed()) {
+		if (isShutdown()) {
 			throw new IllegalStateException("Thread is closed");
 		}
 		Check.notEmpty("events", events);
