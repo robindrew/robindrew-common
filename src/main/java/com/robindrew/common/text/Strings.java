@@ -402,28 +402,30 @@ public class Strings {
 	}
 
 	public static String nanos(long timeInNanos) {
-		long nanos = timeInNanos;
 
 		// Nanos
-		long micros = nanos / 1000;
+		long nanos = timeInNanos % 1000000;
+		long micros = timeInNanos / 1000;
 		if (micros <= 0) {
-			return nanos + " nanos";
+			synchronized (format) {
+				return format.format(nanos) + " ns";
+			}
 		}
 
-		// Micros
+		// Microseconds
 		long millis = micros / 1000;
 		if (millis <= 0) {
 			nanos %= 1000;
-			nanos /= 100;
-			return micros + "." + nanos + " micros";
+			nanos /= 1000;
+			return micros + "." + nanos + " μs";
 		}
 
-		// Millis
+		// Milliseconds
 		long seconds = millis / 1000;
 		if (seconds <= 0) {
 			micros %= 1000;
-			micros /= 100;
-			return millis + "." + micros + " millis";
+			micros /= 1000;
+			return millis + "." + micros + " ms";
 		}
 
 		// Seconds
@@ -431,7 +433,7 @@ public class Strings {
 		if (minutes <= 0) {
 			millis %= 1000;
 			millis /= 100;
-			return seconds + "." + millis + " seconds";
+			return seconds + "." + millis + " s";
 		}
 
 		// Minutes
@@ -439,7 +441,7 @@ public class Strings {
 		if (hours <= 0) {
 			seconds %= 60;
 			seconds = (seconds * 10) / 60;
-			return minutes + "." + seconds + " minutes";
+			return minutes + "." + seconds + " m";
 		}
 
 		// Hours
@@ -447,14 +449,14 @@ public class Strings {
 		if (days <= 0) {
 			minutes %= 60;
 			minutes = (minutes * 10) / 60;
-			return hours + "." + minutes + " hours";
+			return hours + "." + minutes + " h";
 		}
 
 		// Days
 		hours %= 24;
 		hours = (hours * 10) / 24;
 		synchronized (format) {
-			return format.format(days) + "." + hours + " days";
+			return format.format(days) + "." + hours + " d";
 		}
 	}
 
