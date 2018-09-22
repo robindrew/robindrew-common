@@ -401,6 +401,63 @@ public class Strings {
 		return new SimpleDateFormat(datePattern).format(dateInMillis);
 	}
 
+	public static String nanos(long timeInNanos) {
+		long nanos = timeInNanos;
+
+		// Nanos
+		long micros = nanos / 1000;
+		if (micros <= 0) {
+			return nanos + " nanos";
+		}
+
+		// Micros
+		long millis = micros / 1000;
+		if (millis <= 0) {
+			nanos %= 1000;
+			nanos /= 100;
+			return micros + "." + nanos + " micros";
+		}
+
+		// Millis
+		long seconds = millis / 1000;
+		if (seconds <= 0) {
+			micros %= 1000;
+			micros /= 100;
+			return millis + "." + micros + " millis";
+		}
+
+		// Seconds
+		long minutes = seconds / 60;
+		if (minutes <= 0) {
+			millis %= 1000;
+			millis /= 100;
+			return seconds + "." + millis + " seconds";
+		}
+
+		// Minutes
+		long hours = minutes / 60;
+		if (hours <= 0) {
+			seconds %= 60;
+			seconds = (seconds * 10) / 60;
+			return minutes + "." + seconds + " minutes";
+		}
+
+		// Hours
+		long days = hours / 24;
+		if (days <= 0) {
+			minutes %= 60;
+			minutes = (minutes * 10) / 60;
+			return hours + "." + minutes + " hours";
+		}
+
+		// Days
+		hours %= 24;
+		hours = (hours * 10) / 24;
+		synchronized (format) {
+			return format.format(days) + "." + hours + " days";
+		}
+	}
+
 	public static String time(long timeInMillis) {
 		long millis = timeInMillis;
 
