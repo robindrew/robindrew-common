@@ -6,7 +6,7 @@ apply plugin: 'eclipse'
 apply plugin: 'maven'
 
 // ARTIFACT
-version = '1.1.10'
+version = '1.1.11'
 group = 'com.robindrew.common'
 
 // JAVA VERSION
