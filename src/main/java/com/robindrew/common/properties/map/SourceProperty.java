@@ -10,8 +10,8 @@ public class SourceProperty {
 
 	public SourceProperty(String source, String key, String value) {
 		this.source = Check.notEmpty("source", source);
-		this.key = Check.notNull("source", source);
-		this.value = Check.notNull("source", source);
+		this.key = Check.notNull("key", key);
+		this.value = Check.notNull("value", value);
 	}
 
 	public String getSource() {
