@@ -20,6 +20,8 @@ public class Services {
 	private static final IProperty<String> serviceEnv = new StringProperty("service.env").defaultValue("DEV");
 	/** The service log file. */
 	private static final StringProperty serviceLogDir = new StringProperty("service.log.dir");
+	/** The service home link. */
+	private static final StringProperty serviceHomeLink = new StringProperty("service.home.link");
 
 	private Services() {
 		// Utility class - private constructor.
@@ -49,8 +51,15 @@ public class Services {
 	/**
 	 * Returns the service log directory.
 	 */
-	public static String getLogDir() {
+	public static String getServiceLogDir() {
 		return serviceLogDir.get();
+	}
+
+	/**
+	 * Returns the service home link.
+	 */
+	public static String getServiceHomeLink() {
+		return serviceHomeLink.get(null);
 	}
 
 	/**

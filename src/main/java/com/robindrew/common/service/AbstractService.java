@@ -65,7 +65,7 @@ public abstract class AbstractService extends AbstractIdleService {
 	}
 
 	private void checkLogFile() {
-		Services.getLogDir();
+		Services.getServiceLogDir();
 	}
 
 	/**

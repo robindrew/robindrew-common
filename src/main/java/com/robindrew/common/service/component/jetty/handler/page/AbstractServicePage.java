@@ -29,6 +29,8 @@ public abstract class AbstractServicePage extends VelocityHttpExecutor {
 		dataMap.put("serviceInstance", Services.getServiceInstance());
 		dataMap.put("serviceEnv", Services.getServiceEnv());
 		dataMap.put("servicePort", Services.getServicePort());
+		dataMap.put("serviceLogDir", Services.getServiceLogDir());
+		dataMap.put("serviceHomeLink", Services.getServiceHomeLink());
 
 		dataMap.put("systemHost", Java.getHostName());
 		dataMap.put("systemAddress", Java.getHostAddress());

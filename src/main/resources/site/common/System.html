@@ -139,6 +139,11 @@ body {
 <ul class="nav navbar-nav">
 <li class="active"><a href="/System">System</a></li>
 </ul>
+#if($serviceHomeLink)
+<ul class="nav navbar-nav navbar-right">
+<li><a href="${serviceHomeLink}"><span class="glyphicon glyphicon-chevron-up"></span></a></li>
+</ul>
+#end
 </div><!-- /.container-fluid -->
 </nav>
 <!-- NAV BAR -->

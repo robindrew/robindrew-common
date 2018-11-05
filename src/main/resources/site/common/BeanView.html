@@ -45,6 +45,11 @@ form {margin: 0px; padding: 0px;}
 <li class="active"><a href="/BeanView?domain=${bean.domain}&type=${bean.type}&name=${beanName}">${bean.type}</a></li>
 #end
 </ul>
+#if($serviceHomeLink)
+<ul class="nav navbar-nav navbar-right">
+<li><a href="${serviceHomeLink}"><span class="glyphicon glyphicon-chevron-up"></span></a></li>
+</ul>
+#end
 </div><!-- /.container-fluid -->
 </nav>
 <!-- NAV BAR -->
