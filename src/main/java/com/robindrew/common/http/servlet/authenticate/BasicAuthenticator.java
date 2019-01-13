@@ -33,11 +33,11 @@ public class BasicAuthenticator implements IBasicAuthenticator {
 
 		IBasicAuthentication expected = authMap.get(auth.getUsername());
 		if (expected == null || !expected.getPassword().equals(auth.getPassword())) {
-			log.warn("[Authenitcation Failed] {}", auth.getUsername());
+			log.warn("[Authentication Failed] {}", auth.getUsername());
 			return false;
 		}
 
-		log.info("[Authenitcated Succeeded] {}", auth.getUsername());
+		log.info("[Authentication Succeeded] {}", auth.getUsername());
 		return true;
 	}
 
