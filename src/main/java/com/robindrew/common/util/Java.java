@@ -2,6 +2,7 @@ package com.robindrew.common.util;
 
 import java.lang.management.ManagementFactory;
 import java.net.InetAddress;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,9 @@ import com.sun.management.OperatingSystemMXBean;
 public class Java {
 
 	private static final Logger log = LoggerFactory.getLogger(Java.class);
+
+	/** Cache for the host, in case resolution fails */
+	private static final AtomicReference<InetAddress> cachedHost = new AtomicReference<>();
 
 	/**
 	 * Utility class - private constructor.
@@ -148,8 +152,20 @@ public class Java {
 	 */
 	public static InetAddress getLocalHost() {
 		try {
-			return InetAddress.getLocalHost();
+
+			// Resolve the local host
+			InetAddress host = InetAddress.getLocalHost();
+			cachedHost.set(host);
+			return host;
+
 		} catch (Exception e) {
+
+			// Fallback on the cached host (if available)
+			InetAddress host = cachedHost.get();
+			if (host != null) {
+				return host;
+			}
+
 			throw propagate(e);
 		}
 	}
