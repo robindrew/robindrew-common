@@ -8,9 +8,13 @@ I always use **UTF-8** encoding, so in Eclipse you need to:
 
     > Window > Preferences > General > Workspace > Text file encoding > Other: "UTF-8"
 
-I also switch off restricted API errors
+I also switch off restricted API errors:
 
     > Window > Preferences > Java > Compiler > Errors/Warnings > Decprecated and restricted API > Forbidden reference (access rules): "Warning"
+
+I set the code formatter (src/main/eclipse/RobinDrew.Formatter.xml):
+
+    > Window > Preferences > Java > Code Style > Formatter > Import... 
 
 Currently the minimum version for all my projects is **Java 8**.
 
