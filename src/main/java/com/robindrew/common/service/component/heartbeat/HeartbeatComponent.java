@@ -71,7 +71,8 @@ public class HeartbeatComponent extends AbstractScheduledComponent {
 			if (previous != null && latest != null) {
 				GarbageCollector diff = latest.diff(previous);
 				if (diff.getCount() > 0) {
-					log.info("[Garbage] {} ({} collections in {})", diff.getName(), number(diff.getCount()), Strings.time(diff.getTime()));
+					String plural = (diff.getCount() > 1) ? "s" : "";
+					log.info("[Garbage] {} ({} collection{} in {})", diff.getName(), number(diff.getCount()), plural, Strings.time(diff.getTime()));
 				}
 			}
 		}

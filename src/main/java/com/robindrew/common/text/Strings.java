@@ -466,7 +466,7 @@ public class Strings {
 		// Milliseconds
 		long seconds = millis / 1000;
 		if (seconds <= 0) {
-			return millis + " millis";
+			return millis + " ms";
 		}
 
 		// Seconds
@@ -474,7 +474,7 @@ public class Strings {
 		if (minutes <= 0) {
 			millis %= 1000;
 			millis /= 100;
-			return seconds + "." + millis + " seconds";
+			return seconds + "." + millis + " s";
 		}
 
 		// Minutes
@@ -482,7 +482,7 @@ public class Strings {
 		if (hours <= 0) {
 			seconds %= 60;
 			seconds = (seconds * 10) / 60;
-			return minutes + "." + seconds + " minutes";
+			return minutes + "." + seconds + " m";
 		}
 
 		// Hours
@@ -490,14 +490,14 @@ public class Strings {
 		if (days <= 0) {
 			minutes %= 60;
 			minutes = (minutes * 10) / 60;
-			return hours + "." + minutes + " hours";
+			return hours + "." + minutes + " h";
 		}
 
 		// Days
 		hours %= 24;
 		hours = (hours * 10) / 24;
 		synchronized (format) {
-			return format.format(days) + "." + hours + " days";
+			return format.format(days) + "." + hours + " d";
 		}
 	}
 

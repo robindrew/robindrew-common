@@ -3,6 +3,7 @@ package com.robindrew.common.http.servlet.executor;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.google.common.base.Stopwatch;
 import com.robindrew.common.http.ContentType;
 import com.robindrew.common.http.servlet.authenticate.BasicAuthenticationExecutor;
 import com.robindrew.common.http.servlet.authenticate.IBasicAuthenticator;
@@ -17,6 +18,9 @@ import com.robindrew.common.util.Check;
 
 public abstract class VelocityHttpExecutor implements IHttpExecutor {
 
+	private static final String META_RENDER_TIMER = "META_RENDER_TIMER";
+	private static final String META_EXECUTE_TIMER = "META_EXECUTE_TIMER";
+
 	private final IVelocityHttpContext context;
 	private final String templateName;
 
@@ -27,6 +31,7 @@ public abstract class VelocityHttpExecutor implements IHttpExecutor {
 
 	@Override
 	public void execute(IHttpRequest request, IHttpResponse response) {
+		Stopwatch renderTimer = Stopwatch.createStarted();
 
 		// Filter ...
 		IHttpRequestFilter filter = context.getRequestFilter();
@@ -47,7 +52,13 @@ public abstract class VelocityHttpExecutor implements IHttpExecutor {
 
 		// Handle the request
 		Map<String, Object> dataMap = new LinkedHashMap<>();
+		Stopwatch executeTimer = Stopwatch.createStarted();
 		execute(request, response, dataMap);
+		executeTimer.stop();
+
+		// Add meta data to the data map
+		dataMap.put(META_EXECUTE_TIMER, executeTimer);
+		dataMap.put(META_RENDER_TIMER, renderTimer);
 
 		// Execute the template
 		String text = template.execute(new TemplateData(dataMap));

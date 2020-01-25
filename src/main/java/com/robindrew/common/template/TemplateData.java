@@ -3,7 +3,7 @@ package com.robindrew.common.template;
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -18,21 +18,21 @@ public class TemplateData implements ITemplateData {
 		if (map == null) {
 			throw new NullPointerException("map");
 		}
-		this.map = new HashMap<String, Object>(map);
+		this.map = new LinkedHashMap<String, Object>(map);
 	}
 
 	public TemplateData(Multimap<String, ?> map) {
 		if (map == null) {
 			throw new NullPointerException("map");
 		}
-		this.map = new HashMap<String, Object>(map.size());
+		this.map = new LinkedHashMap<String, Object>(map.size());
 		for (Entry<String, ?> entry : map.entries()) {
 			this.map.put(entry.getKey(), entry.getValue());
 		}
 	}
 
 	public TemplateData() {
-		this.map = new HashMap<String, Object>();
+		this.map = new LinkedHashMap<String, Object>();
 	}
 
 	@Override
