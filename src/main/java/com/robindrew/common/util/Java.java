@@ -13,7 +13,6 @@ import com.sun.management.OperatingSystemMXBean;
 /**
  * A utility that brings together common core language functionality in to a single class.
  */
-@SuppressWarnings("restriction")
 public class Java {
 
 	private static final Logger log = LoggerFactory.getLogger(Java.class);
