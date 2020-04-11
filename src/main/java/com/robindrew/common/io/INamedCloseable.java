@@ -2,9 +2,12 @@ package com.robindrew.common.io;
 
 public interface INamedCloseable extends AutoCloseable {
 
-	String getName();
+	default String getName() {
+		return getClass().getSimpleName();
+	}
 
 	@Override
-	void close();
+	default void close() {
+	}
 
 }
