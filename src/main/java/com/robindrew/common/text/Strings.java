@@ -29,6 +29,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.robindrew.common.date.duration.DurationMillis;
+import com.robindrew.common.json.Gsons;
 import com.robindrew.common.lang.bytes.Bytes;
 import com.robindrew.common.text.selection.Selection;
 import com.robindrew.common.text.selection.SelectionOption;
@@ -62,11 +63,7 @@ public class Strings {
 	}
 
 	public static String json(Object object, boolean formatted) {
-		GsonBuilder builder = new GsonBuilder();
-		if (formatted) {
-			builder = builder.setPrettyPrinting();
-		}
-		return builder.create().toJson(object);
+		return Gsons.toString(object, formatted);
 	}
 
 	public static String number(Collection<?> collection) {

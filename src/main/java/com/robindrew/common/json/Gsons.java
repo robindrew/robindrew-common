@@ -7,10 +7,14 @@ import com.google.gson.JsonParser;
 
 public class Gsons {
 
-	public static String prettyPrint(Object object) {
-		return new GsonBuilder().setPrettyPrinting().create().toJson(object);
+	public static String toString(Object object, boolean prettyPrint) {
+		GsonBuilder builder = new GsonBuilder();
+		if (prettyPrint) {
+			builder.setPrettyPrinting();
+		}
+		return builder.create().toJson(object);
 	}
-	
+
 	public static IJson toJson(JsonObject object) {
 		return new JsonObjectWrapper(object);
 	}
