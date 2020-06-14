@@ -2,6 +2,7 @@ package com.robindrew.common.io.data;
 
 import java.io.DataOutput;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -16,9 +17,11 @@ public interface IDataWriter extends DataOutput, AutoCloseable {
 
 	void flush() throws IOException;
 
-	String getCharset();
+	Charset getCharset();
 
-	void setCharset(String charsetName);
+	void setCharset(Charset charset);
+
+	void writeNull(boolean isNull) throws IOException;
 
 	void writePositiveByte(byte value) throws IOException;
 
@@ -55,6 +58,8 @@ public interface IDataWriter extends DataOutput, AutoCloseable {
 	void writeBooleanObject(Boolean value, boolean nullable) throws IOException;
 
 	void writeString(String value, boolean nullable) throws IOException;
+
+	void writeString(String value, boolean nullable, Charset charset) throws IOException;
 
 	void writeDate(Date value, boolean nullable) throws IOException;
 
@@ -143,5 +148,7 @@ public interface IDataWriter extends DataOutput, AutoCloseable {
 	<T> void writeObjectCollection(Collection<T> collection, boolean nullableCollection, boolean nullableElements, IDataSerializer<T> serializer) throws IOException;
 
 	<T> void writeObject(T object, boolean nullable, IDataSerializer<T> serializer) throws IOException;
+
+	<T> void writeObject(T object, IDataSerializer<T> serializer) throws IOException;
 
 }

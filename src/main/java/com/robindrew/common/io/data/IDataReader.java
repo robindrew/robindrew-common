@@ -2,6 +2,7 @@ package com.robindrew.common.io.data;
 
 import java.io.DataInput;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -13,9 +14,11 @@ public interface IDataReader extends DataInput, AutoCloseable {
 
 	void close() throws IOException;
 
-	String getCharset();
+	Charset getCharset();
 
-	void setCharset(String charsetName);
+	void setCharset(Charset charset);
+
+	boolean readNull() throws IOException;
 
 	byte readPositiveByte() throws IOException;
 
@@ -52,6 +55,8 @@ public interface IDataReader extends DataInput, AutoCloseable {
 	Boolean readBooleanObject(boolean nullable) throws IOException;
 
 	String readString(boolean nullable) throws IOException;
+
+	String readString(boolean nullable, Charset charset) throws IOException;
 
 	Date readDate(boolean nullable) throws IOException;
 
@@ -140,5 +145,7 @@ public interface IDataReader extends DataInput, AutoCloseable {
 	<T, C extends Collection<T>> C readObjectCollection(C collection, boolean nullableCollection, boolean nullableElements, IDataSerializer<T> serializer) throws IOException;
 
 	<T> T readObject(boolean nullable, IDataSerializer<T> serializer) throws IOException;
+
+	<T> T readObject(IDataSerializer<T> serializer) throws IOException;
 
 }

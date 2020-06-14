@@ -5,20 +5,23 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Array;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
 import com.robindrew.common.io.data.number.DynamicNumber;
 import com.robindrew.common.io.data.number.PositiveNumber;
 
 public class DataReader extends DataInputStream implements IDataReader {
 
-	private static final byte NULL = -1;
+	public static final byte NULL = -1;
+	public static final byte NOT_NULL = 0;
 
-	private String charsetName = "UTF-8";
+	private Charset charset = Charsets.UTF_8;
 
 	public DataReader(InputStream input) {
 		super(input);
@@ -29,25 +32,26 @@ public class DataReader extends DataInputStream implements IDataReader {
 	}
 
 	@Override
-	public String getCharset() {
-		return charsetName;
+	public Charset getCharset() {
+		return charset;
 	}
 
 	@Override
-	public void setCharset(String charsetName) {
-		if (charsetName.length() == 0) {
-			throw new IllegalArgumentException("charsetName is empty");
+	public void setCharset(Charset charset) {
+		if (charset == null) {
+			throw new NullPointerException("charset");
 		}
-		this.charsetName = charsetName;
+		this.charset = charset;
 	}
 
-	private boolean isNull() throws IOException {
+	@Override
+	public boolean readNull() throws IOException {
 		return readByte() == NULL;
 	}
 
 	private int readLength(boolean nullable) throws IOException {
 		if (nullable) {
-			if (isNull()) {
+			if (readNull()) {
 				return NULL;
 			}
 		}
@@ -96,7 +100,7 @@ public class DataReader extends DataInputStream implements IDataReader {
 
 	@Override
 	public Byte readByteObject(boolean nullable) throws IOException {
-		if (nullable && isNull()) {
+		if (nullable && readNull()) {
 			return null;
 		}
 		return readByte();
@@ -104,7 +108,7 @@ public class DataReader extends DataInputStream implements IDataReader {
 
 	@Override
 	public Short readShortObject(boolean nullable) throws IOException {
-		if (nullable && isNull()) {
+		if (nullable && readNull()) {
 			return null;
 		}
 		return readShort();
@@ -112,7 +116,7 @@ public class DataReader extends DataInputStream implements IDataReader {
 
 	@Override
 	public Integer readIntegerObject(boolean nullable) throws IOException {
-		if (nullable && isNull()) {
+		if (nullable && readNull()) {
 			return null;
 		}
 		return readInt();
@@ -120,7 +124,7 @@ public class DataReader extends DataInputStream implements IDataReader {
 
 	@Override
 	public Long readLongObject(boolean nullable) throws IOException {
-		if (nullable && isNull()) {
+		if (nullable && readNull()) {
 			return null;
 		}
 		return readLong();
@@ -128,7 +132,7 @@ public class DataReader extends DataInputStream implements IDataReader {
 
 	@Override
 	public Float readFloatObject(boolean nullable) throws IOException {
-		if (nullable && isNull()) {
+		if (nullable && readNull()) {
 			return null;
 		}
 		return readFloat();
@@ -136,7 +140,7 @@ public class DataReader extends DataInputStream implements IDataReader {
 
 	@Override
 	public Double readDoubleObject(boolean nullable) throws IOException {
-		if (nullable && isNull()) {
+		if (nullable && readNull()) {
 			return null;
 		}
 		return readDouble();
@@ -144,7 +148,7 @@ public class DataReader extends DataInputStream implements IDataReader {
 
 	@Override
 	public Character readCharacterObject(boolean nullable) throws IOException {
-		if (nullable && isNull()) {
+		if (nullable && readNull()) {
 			return null;
 		}
 		return readChar();
@@ -164,18 +168,23 @@ public class DataReader extends DataInputStream implements IDataReader {
 
 	@Override
 	public String readString(boolean nullable) throws IOException {
+		return readString(nullable, charset);
+	}
+
+	@Override
+	public String readString(boolean nullable, Charset charset) throws IOException {
 		int length = readLength(nullable);
 		if (length == NULL) {
 			return null;
 		}
 		byte[] bytes = new byte[length];
 		readFully(bytes);
-		return new String(bytes, charsetName);
+		return new String(bytes, charset);
 	}
 
 	@Override
 	public Date readDate(boolean nullable) throws IOException {
-		if (nullable && isNull()) {
+		if (nullable && readNull()) {
 			return null;
 		}
 		return new Date(readLong());
@@ -687,7 +696,7 @@ public class DataReader extends DataInputStream implements IDataReader {
 
 	@Override
 	public <E extends Enum<E>> E readEnum(Class<E> enumType, boolean nullable) throws IOException {
-		if (nullable && isNull()) {
+		if (nullable && readNull()) {
 			return null;
 		}
 		int ordinal = readPositiveInt();
@@ -707,7 +716,7 @@ public class DataReader extends DataInputStream implements IDataReader {
 		}
 		for (int i = 0; i < length; i++) {
 			T element = null;
-			if (!nullableElements || !isNull()) {
+			if (!nullableElements || !readNull()) {
 				element = serializer.readObject(this);
 			}
 			collection.add(element);
@@ -717,7 +726,7 @@ public class DataReader extends DataInputStream implements IDataReader {
 
 	@Override
 	public <T> T readObject(boolean nullable, IDataSerializer<T> serializer) throws IOException {
-		if (nullable && isNull()) {
+		if (nullable && readNull()) {
 			return null;
 		}
 		return serializer.readObject(this);
@@ -763,4 +772,10 @@ public class DataReader extends DataInputStream implements IDataReader {
 		}
 		return collection;
 	}
+
+	@Override
+	public <T> T readObject(IDataSerializer<T> serializer) throws IOException {
+		return readObject(false, serializer);
+	}
+
 }

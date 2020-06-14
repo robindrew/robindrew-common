@@ -3,20 +3,22 @@ package com.robindrew.common.io.data;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import com.google.common.base.Charsets;
 import com.google.common.base.Supplier;
 import com.robindrew.common.io.data.number.DynamicNumber;
 import com.robindrew.common.io.data.number.PositiveNumber;
 
 public class DataWriter extends DataOutputStream implements IDataWriter {
 
-	private static final byte NULL = -1;
-	private static final byte NOT_NULL = 0;
+	public static final byte NULL = -1;
+	public static final byte NOT_NULL = 0;
 
-	private String charsetName = "UTF-8";
+	private Charset charset = Charsets.UTF_8;
 
 	public DataWriter(OutputStream output) {
 		super(output);
@@ -27,20 +29,25 @@ public class DataWriter extends DataOutputStream implements IDataWriter {
 	}
 
 	@Override
-	public String getCharset() {
-		return charsetName;
+	public Charset getCharset() {
+		return charset;
 	}
 
 	@Override
-	public void setCharset(String charsetName) {
-		if (charsetName.length() == 0) {
-			throw new IllegalArgumentException("charsetName is empty");
+	public void setCharset(Charset charset) {
+		if (charset == null) {
+			throw new NullPointerException("charset");
 		}
-		this.charsetName = charsetName;
+		this.charset = charset;
 	}
 
 	private void writeLength(int length) throws IOException {
 		writePositiveInt(length);
+	}
+
+	@Override
+	public void writeNull(boolean isNull) throws IOException {
+		writeByte(isNull ? NULL : NOT_NULL);
 	}
 
 	private boolean writeNull(Object value, boolean nullable) throws IOException {
@@ -51,10 +58,10 @@ public class DataWriter extends DataOutputStream implements IDataWriter {
 			return false;
 		}
 		if (value == null) {
-			writeByte(NULL);
+			writeNull(true);
 			return true;
 		} else {
-			writeByte(NOT_NULL);
+			writeNull(false);
 			return false;
 		}
 	}
@@ -169,10 +176,15 @@ public class DataWriter extends DataOutputStream implements IDataWriter {
 
 	@Override
 	public void writeString(String value, boolean nullable) throws IOException {
+		writeString(value, nullable, charset);
+	}
+
+	@Override
+	public void writeString(String value, boolean nullable, Charset charset) throws IOException {
 		if (writeNull(value, nullable)) {
 			return;
 		}
-		byte[] bytes = value.getBytes(charsetName);
+		byte[] bytes = value.getBytes(charset);
 		writeLength(bytes.length);
 		write(bytes);
 	}
@@ -601,6 +613,11 @@ public class DataWriter extends DataOutputStream implements IDataWriter {
 		for (E value : collection) {
 			writeEnum(value, nullableElements);
 		}
+	}
+
+	@Override
+	public <T> void writeObject(T object, IDataSerializer<T> serializer) throws IOException {
+		writeObject(object, false, serializer);
 	}
 
 }
