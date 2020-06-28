@@ -80,8 +80,9 @@ public class HeartbeatComponent extends AbstractScheduledComponent {
 
 	private void reportHeap(VirtualMachine latest) {
 		long used = latest.getHeapMemoryUsed();
-		long total = latest.getHeapMemoryMax();
-		log.info("[Heap] {} Used / {} Max ({})", bytes(used), bytes(total), percent(used, total));
+		long total = latest.getHeapMemoryTotal();
+		long max = latest.getHeapMemoryMax();
+		log.info("[Heap] {} / {} / {} ({})", bytes(used), bytes(total), bytes(max), percent(used, max));
 	}
 
 	@Override
