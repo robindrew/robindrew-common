@@ -19,6 +19,8 @@ public class MimeType {
 	public static final MimeType VIDEO_MPEG = new MimeType("video/mpeg", false);
 	public static final MimeType VIDEO_MP4 = new MimeType("video/mp4", false);
 
+	public static final MimeType FONT_OTF = new MimeType("font/otf", false);
+
 	public static final MimeType APPLICATION_JSON = new MimeType("application/json", true);
 	public static final MimeType APPLICATION_JAVASCRIPT = new MimeType("application/javascript", true);
 
@@ -74,6 +76,11 @@ public class MimeType {
 		}
 		if (extension.equals("gif")) {
 			return IMAGE_GIF;
+		}
+
+		// Font types
+		if (extension.equals("otf")) {
+			return FONT_OTF;
 		}
 
 		// Video types

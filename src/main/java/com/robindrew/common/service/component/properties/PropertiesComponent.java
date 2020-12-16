@@ -28,6 +28,7 @@ public class PropertiesComponent extends AbstractIdleComponent {
 
 	private static final String DEFAULT_PATH_PREFIX = "config/instance";
 	private static final String DEFAULT_PATH_SUFFIX = ".properties";
+	private static final String DEFAULT_FILE_NAME = "default";
 
 	@Override
 	protected void startupComponent() throws Exception {
@@ -64,7 +65,7 @@ public class PropertiesComponent extends AbstractIdleComponent {
 		log.warn("Properties file not found: {}", path);
 
 		// Finally fallback to common.properties
-		path = basePath + "common" + DEFAULT_PATH_SUFFIX;
+		path = basePath + DEFAULT_FILE_NAME + DEFAULT_PATH_SUFFIX;
 		log.info("Loading properties from default path (host-specific) " + path);
 		return PropertiesReader.readFromResource(path);
 	}
