@@ -36,8 +36,12 @@ public class HttpRequest extends HttpServletRequestWrapper implements IHttpReque
 
 	@Override
 	public List<String> getCookies(String key) {
-		List<String> values = new ArrayList<>();
-		for (Cookie cookie : getCookies()) {
+		Cookie[] cookies = getCookies();
+		if (cookies == null || cookies.length == 0) {
+			return Collections.emptyList();
+		}
+		List<String> values = new ArrayList<>(cookies.length);
+		for (Cookie cookie : cookies) {
 			if (cookie.getName().equals(key)) {
 				values.add(cookie.getValue());
 			}
