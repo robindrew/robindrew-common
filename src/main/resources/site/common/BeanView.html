@@ -38,10 +38,10 @@ form {margin: 0px; padding: 0px;}
 <ul class="nav navbar-nav">
 <li><a href="/BeanConsole">MBeans</a></li>
 #if($bean.hasName())
-<li><a href="/BeanConsole">${bean.domain} ${bean.type}</a></li>
+<li><a href="/BeanView?domain=${bean.domain}&type=${bean.type}&name=${beanName}">${bean.domain} ${bean.type}</a></li>
 <li class="active"><a href="/BeanView?domain=${bean.domain}&type=${bean.type}&name=${beanName}">${bean.name}</a></li>
 #else
-<li><a href="/BeanConsole">${bean.domain}</a></li>
+<li><a href="/BeanView?domain=${bean.domain}&type=${bean.type}&name=${beanName}">${bean.domain}</a></li>
 <li class="active"><a href="/BeanView?domain=${bean.domain}&type=${bean.type}&name=${beanName}">${bean.type}</a></li>
 #end
 </ul>
