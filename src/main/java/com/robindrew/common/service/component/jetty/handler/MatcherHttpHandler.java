@@ -121,6 +121,10 @@ public class MatcherHttpHandler extends AbstractHandler {
 		register().uri(uri).executor(executor);
 	}
 
+	public void uriPattern(String uriRegex, IHttpExecutor executor) {
+		register().uriPattern(uriRegex).executor(executor);
+	}
+
 	public void resources(String uriRegex, String directory) {
 		register().uriPattern(uriRegex).resourceDirectory(directory);
 	}

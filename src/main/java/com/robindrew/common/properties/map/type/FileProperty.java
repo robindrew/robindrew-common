@@ -11,6 +11,7 @@ import com.robindrew.common.properties.map.PropertyException;
 public class FileProperty extends AbstractProperty<File> {
 
 	private boolean exists = false;
+	private boolean create = false;
 	private boolean directory = false;
 
 	public FileProperty(String... keys) {
@@ -37,6 +38,13 @@ public class FileProperty extends AbstractProperty<File> {
 		return this;
 	}
 
+	public FileProperty createDirectory() {
+		this.create = true;
+		this.exists = true;
+		this.directory = true;
+		return this;
+	}
+
 	@Override
 	public FileProperty notNull(boolean notNull) {
 		super.notNull(notNull);
@@ -53,7 +61,13 @@ public class FileProperty extends AbstractProperty<File> {
 	protected File parseValue(String key, String value) {
 		File file = new File(value);
 		if (exists && !file.exists()) {
-			throw new PropertyException("File does not exist: " + file);
+			if (create && directory) {
+				if (!file.mkdirs()) {
+					throw new PropertyException("Directory does not exist: " + file);
+				}
+			} else {
+				throw new PropertyException("File does not exist: " + file);
+			}
 		}
 		if (directory && !file.isDirectory()) {
 			throw new PropertyException("Not a directory: " + file);
