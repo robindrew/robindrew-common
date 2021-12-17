@@ -1,68 +1,18 @@
 package com.robindrew.common.http.servlet.filter;
 
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.LinkedHashSet;
+import static com.robindrew.common.http.servlet.filter.NetworkHosts.getNetworkHosts;
+
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.google.common.collect.ImmutableSet;
 import com.robindrew.common.collect.copyonwrite.CopyOnWriteSet;
 import com.robindrew.common.http.servlet.request.IHttpRequest;
 
 public class HostHttpRequestFilter implements IHttpRequestFilter {
 
-	private static final Logger log = LoggerFactory.getLogger(HostHttpRequestFilter.class);
-
-	private static final Set<String> DEFAULT_VALID_SET = createDefaultValidSet();
-
-	private static Set<String> createDefaultValidSet() {
-		Set<String> set = new LinkedHashSet<>();
-		set.add("0:0:0:0:0:0:0:1");
-		set.add("127.0.0.1");
-		set.add("localhost");
-
-		try {
-			try {
-				Enumeration<NetworkInterface> nets = NetworkInterface.getNetworkInterfaces();
-				for (NetworkInterface network : Collections.list(nets)) {
-					Enumeration<InetAddress> addresses = network.getInetAddresses();
-					while (addresses.hasMoreElements()) {
-						InetAddress element = addresses.nextElement();
-						set.add(clean(element.getHostAddress()));
-						set.add(clean(element.getHostName()));
-					}
-				}
-			} catch (Exception e) {
-				log.info("Unable to list network interfaces", e);
-			}
-
-		} catch (Exception e) {
-			log.warn("Error resolving host", e);
-		}
-		return ImmutableSet.copyOf(set);
-	}
-
-	private static String clean(String address) {
-		int percent = address.indexOf('%');
-		if (percent != -1) {
-			address = address.substring(0, percent);
-		}
-		return address;
-	}
-
 	private final AtomicBoolean enabled = new AtomicBoolean(true);
 	private final Set<String> validSet = new CopyOnWriteSet<>();
-
-	public HostHttpRequestFilter() {
-		validSet.addAll(DEFAULT_VALID_SET);
-	}
 
 	@Override
 	public boolean isEnabled() {
@@ -75,7 +25,10 @@ public class HostHttpRequestFilter implements IHttpRequestFilter {
 	}
 
 	public Set<String> getAllValid() {
-		return new TreeSet<>(validSet);
+		Set<String> set = new TreeSet<>();
+		set.addAll(getNetworkHosts().getAll());
+		set.addAll(validSet);
+		return set;
 	}
 
 	public HostHttpRequestFilter addValid(String addressOrHost) {
@@ -103,8 +56,8 @@ public class HostHttpRequestFilter implements IHttpRequestFilter {
 	}
 
 	public boolean isValid(String addressOrHost) {
-		addressOrHost = clean(addressOrHost);
-		return validSet.contains(addressOrHost);
+		addressOrHost = NetworkHosts.clean(addressOrHost);
+		return validSet.contains(addressOrHost) || getNetworkHosts().contains(addressOrHost);
 	}
 
 	@Override
