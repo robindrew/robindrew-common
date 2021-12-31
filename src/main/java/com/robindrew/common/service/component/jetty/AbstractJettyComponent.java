@@ -54,7 +54,7 @@ public abstract class AbstractJettyComponent extends AbstractIdleComponent {
 
 		// Create the thread pool
 		int threads = getThreads();
-		log.info("[Jetty] threads: {}", threads);
+		log.info("[Jetty] Threads: {}", threads);
 
 		// Create the jetty server
 		ThreadFactory factory = Threads.newThreadFactory(getName() + "Worker-%d", false);
