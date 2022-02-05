@@ -11,6 +11,8 @@ public class ContentType {
 	public static final ContentType TEXT_PLAIN = new ContentType(MimeType.TEXT_PLAIN, Charsets.UTF_8);
 	/** text/html; charset=UTF-8 */
 	public static final ContentType TEXT_HTML = new ContentType(MimeType.TEXT_HTML, Charsets.UTF_8);
+	/** text/csv; charset=UTF-8 */
+	public static final ContentType TEXT_CSV = new ContentType(MimeType.TEXT_CSV, Charsets.UTF_8);
 	/** application/json; charset=UTF-8 */
 	public static final ContentType APPLICATION_JSON = new ContentType(MimeType.APPLICATION_JSON, Charsets.UTF_8);
 
