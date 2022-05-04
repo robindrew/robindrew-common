@@ -130,6 +130,14 @@ public class Files {
 		}
 	}
 
+	public static List<String> readToLines(File file) {
+		try {
+			return asCharSource(file).readLines();
+		} catch (IOException e) {
+			throw Java.propagate(e);
+		}
+	}
+
 	public static void writeFromBytes(File file, byte[] bytes) {
 		try {
 			asByteSink(file).write(bytes);
