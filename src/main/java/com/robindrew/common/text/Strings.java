@@ -30,6 +30,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.robindrew.common.date.duration.DurationMillis;
 import com.robindrew.common.json.Gsons;
+import com.robindrew.common.lang.Bits;
 import com.robindrew.common.lang.bytes.Bytes;
 import com.robindrew.common.text.selection.Selection;
 import com.robindrew.common.text.selection.SelectionOption;
@@ -579,5 +580,25 @@ public class Strings {
 
 	public static String hex(byte[] bytes) {
 		return Hex.encodeHexString(bytes);
+	}
+
+	public static String bits(long value) {
+		return Bits.toString(value);
+	}
+
+	public static String bits(int value) {
+		return Bits.toString(value);
+	}
+
+	public static String bits(short value) {
+		return Bits.toString(value);
+	}
+
+	public static String bits(byte value) {
+		return Bits.toString(value);
+	}
+
+	public static String bits(byte[] values) {
+		return Bits.toString(values);
 	}
 }
