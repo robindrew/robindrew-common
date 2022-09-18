@@ -4,7 +4,7 @@ public class BooleanParser extends ObjectParser<Boolean> {
 
 	@Override
 	protected Boolean parseObject(String text) {
-		return new Boolean(text);
+		return Boolean.parseBoolean(text);
 	}
 
 }
