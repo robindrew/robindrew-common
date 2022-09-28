@@ -4,6 +4,7 @@ import static com.google.common.base.Charsets.UTF_8;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.io.StringWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
 
@@ -11,6 +12,7 @@ import org.simpleframework.xml.core.Persister;
 
 import com.google.common.io.ByteSink;
 import com.google.common.io.ByteSource;
+import com.robindrew.common.util.Java;
 
 public class SimpleXmlPersister<V> implements IObjectPersister<V> {
 
@@ -48,6 +50,16 @@ public class SimpleXmlPersister<V> implements IObjectPersister<V> {
 			return persister.read(type, reader);
 		} catch (Exception e) {
 			throw new IOException("Failed to read value of type " + type + " from persister", e);
+		}
+	}
+	
+	public String writeToString(V value) {
+		try {
+			StringWriter writer = new StringWriter();
+			persister.write(value, writer);
+			return writer.toString();
+		} catch (Exception e) {
+			throw Java.propagate(e);
 		}
 	}
 
