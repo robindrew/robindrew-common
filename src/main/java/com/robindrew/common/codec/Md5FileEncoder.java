@@ -24,7 +24,6 @@ public class Md5FileEncoder extends Md5Encoder {
 		this.bufferSize = bufferSize;
 	}
 
-	@Override
 	public byte[] encodeToBytes(File file) {
 		return encodeFiles(Arrays.asList(file));
 	}
