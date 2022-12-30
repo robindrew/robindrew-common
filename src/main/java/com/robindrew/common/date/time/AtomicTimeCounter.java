@@ -8,6 +8,7 @@ public class AtomicTimeCounter implements ITimeCounter {
 	private final AtomicInteger totalNumber = new AtomicInteger(0);
 	private final AtomicLong totalTime = new AtomicLong(0);
 
+	@Override
 	public void increment(long time) {
 		if (time < 0) {
 			throw new IllegalArgumentException();
@@ -16,14 +17,17 @@ public class AtomicTimeCounter implements ITimeCounter {
 		totalTime.addAndGet(time);
 	}
 
+	@Override
 	public int getNumber() {
 		return totalNumber.get();
 	}
 
+	@Override
 	public long getTotalTime() {
 		return totalTime.get();
 	}
 
+	@Override
 	public long getAverageTime() {
 		long number = getNumber();
 		long time = getTotalTime();

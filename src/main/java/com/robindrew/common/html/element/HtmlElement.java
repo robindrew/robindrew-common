@@ -1,7 +1,7 @@
 package com.robindrew.common.html.element;
 
-import static com.robindrew.common.html.element.HtmlElements.appendElement;
 import static com.robindrew.common.html.element.HtmlElements.appendAttribute;
+import static com.robindrew.common.html.element.HtmlElements.appendElement;
 
 public abstract class HtmlElement implements IHtmlElement {
 
@@ -22,10 +22,12 @@ public abstract class HtmlElement implements IHtmlElement {
 		return html;
 	}
 
+	@Override
 	public String getHtmlId() {
 		return htmlId;
 	}
 
+	@Override
 	public String getHtmlClass() {
 		return htmlClass;
 	}
@@ -49,6 +51,7 @@ public abstract class HtmlElement implements IHtmlElement {
 		return this;
 	}
 
+	@Override
 	public boolean isEmpty() {
 		return true;
 	}

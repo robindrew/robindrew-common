@@ -18,6 +18,7 @@ public abstract class ObjectSerializer<O> implements IDataSerializer<O> {
 		return nullable;
 	}
 
+	@Override
 	public O readObject(IDataReader reader) throws IOException {
 		if (isNullable() && reader.readNull()) {
 			return null;
@@ -25,6 +26,7 @@ public abstract class ObjectSerializer<O> implements IDataSerializer<O> {
 		return readValue(reader);
 	}
 
+	@Override
 	public void writeObject(IDataWriter writer, O value) throws IOException {
 		if (isNullable()) {
 			if (value == null) {

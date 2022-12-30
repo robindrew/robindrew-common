@@ -12,6 +12,7 @@ import java.util.List;
  */
 public interface IDataReader extends DataInput, AutoCloseable {
 
+	@Override
 	void close() throws IOException;
 
 	Charset getCharset();
