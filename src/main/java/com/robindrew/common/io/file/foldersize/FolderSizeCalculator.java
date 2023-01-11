@@ -3,25 +3,10 @@ package com.robindrew.common.io.file.foldersize;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.List;
 
 import com.robindrew.common.util.Java;
 
 public class FolderSizeCalculator {
-
-	public static void main(String[] args) {
-		File dir = new File("C:/development/cygwin64");
-		FolderSizeReport report = new FolderSizeCalculator(dir).newReport();
-		FolderSizeFilters filters = new FolderSizeFilters();
-		filters.setMaxFolderCount(10);
-		filters.setMaxFolderDepth(1);
-		List<FolderSize> list = report.getFolderSizeList(filters);
-		System.out.println(report.getFileCount() + " files");
-		System.out.println(report.getFolderCount() + " folders");
-		for (FolderSize size : list) {
-			System.out.println(size);
-		}
-	}
 
 	private final File directory;
 

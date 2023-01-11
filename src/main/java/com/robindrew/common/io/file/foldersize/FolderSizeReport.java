@@ -1,5 +1,7 @@
 package com.robindrew.common.io.file.foldersize;
 
+import static java.nio.file.FileVisitResult.CONTINUE;
+
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.nio.file.FileVisitResult;
@@ -23,7 +25,6 @@ public class FolderSizeReport extends SimpleFileVisitor<Path> {
 
 	private final Map<Path, FolderSize> folderSizeMap = new LinkedHashMap<>();
 	private FolderSize currentFolder = null;
-	private long currentSize = 0;
 	private int fileCount = 0;
 	private int folderCount = 0;
 
@@ -85,30 +86,27 @@ public class FolderSizeReport extends SimpleFileVisitor<Path> {
 		folderSizeMap.put(folder, folderSize);
 
 		// Reset
-		currentSize = 0;
 		currentFolder = folderSize;
 
-		return FileVisitResult.CONTINUE;
+		return CONTINUE;
 	}
 
 	@Override
 	public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-		currentSize += attrs.size();
+		currentFolder.increment(attrs.size());
 		fileCount++;
-		return FileVisitResult.CONTINUE;
+		return CONTINUE;
 	}
 
 	@Override
 	public FileVisitResult postVisitDirectory(Path folder, IOException exc) throws IOException {
 
 		FolderSize folderSize = folderSizeMap.get(folder);
-		folderSize.increment(currentSize);
 
 		// Reset
-		currentSize = 0;
 		currentFolder = folderSize.getParent().orElse(null);
 
-		return FileVisitResult.CONTINUE;
+		return CONTINUE;
 	}
 
 	@Override
@@ -118,7 +116,7 @@ public class FolderSizeReport extends SimpleFileVisitor<Path> {
 		} else {
 			log.warn("Unable to visit path: " + path, e);
 		}
-		return FileVisitResult.CONTINUE;
+		return CONTINUE;
 	}
 
 }
