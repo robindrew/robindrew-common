@@ -22,8 +22,26 @@ public class FolderSizeReport extends SimpleFileVisitor<Path> {
 	private static final Logger log = LoggerFactory.getLogger(FolderSizeReport.class);
 
 	private final Map<Path, FolderSize> folderSizeMap = new LinkedHashMap<>();
-	private volatile FolderSize currentFolder = null;
-	private volatile long currentSize = 0;
+	private FolderSize currentFolder = null;
+	private long currentSize = 0;
+	private int fileCount = 0;
+	private int folderCount = 0;
+
+	public int getFileCount() {
+		return fileCount;
+	}
+
+	public void setFileCount(int fileCount) {
+		this.fileCount = fileCount;
+	}
+
+	public int getFolderCount() {
+		return folderCount;
+	}
+
+	public void setFolderCount(int folderCount) {
+		this.folderCount = folderCount;
+	}
 
 	public List<Path> getFolderList() {
 		return ImmutableList.copyOf(folderSizeMap.keySet());
@@ -60,6 +78,7 @@ public class FolderSizeReport extends SimpleFileVisitor<Path> {
 		FolderSize folderSize;
 		if (currentFolder != null) {
 			folderSize = new FolderSize(folder, currentFolder);
+			folderCount++;
 		} else {
 			folderSize = new FolderSize(folder);
 		}
@@ -75,6 +94,7 @@ public class FolderSizeReport extends SimpleFileVisitor<Path> {
 	@Override
 	public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
 		currentSize += attrs.size();
+		fileCount++;
 		return FileVisitResult.CONTINUE;
 	}
 
