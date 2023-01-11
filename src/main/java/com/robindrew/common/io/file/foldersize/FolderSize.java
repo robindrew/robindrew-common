@@ -8,7 +8,11 @@ public class FolderSize implements Comparable<FolderSize> {
 	private final Path path;
 	private final Optional<FolderSize> parent;
 	private final int depth;
-	private volatile long size = 0;
+	private long size = 0;
+
+	private int fileCount = 0;
+	private int symLinkCount = 0;
+	private int folderCount = 0;
 
 	public FolderSize(Path path) {
 		if (path == null) {
@@ -43,20 +47,67 @@ public class FolderSize implements Comparable<FolderSize> {
 		return size;
 	}
 
-	public void increment(long size) {
+	public int getDepth() {
+		return depth;
+	}
+
+	public int getFileCount() {
+		return fileCount;
+	}
+
+	public int getSubFolderCount() {
+		return folderCount;
+	}
+
+	public int getSymLinkCount() {
+		return symLinkCount;
+	}
+
+	void newFolder() {
+		this.folderCount++;
+	}
+
+	void newSymLink() {
+		this.symLinkCount++;
+	}
+
+	void newFile(long size) {
+		newFile(size, true);
+	}
+
+	void newFile(long size, boolean incrementFiles) {
 		if (size < 0) {
 			throw new IllegalArgumentException("size");
 		}
 		this.size += size;
+		if (incrementFiles) {
+			this.fileCount++;
+		}
 
 		if (parent.isPresent()) {
-			parent.get().increment(size);
+			parent.get().newFile(size, false);
 		}
 	}
 
 	@Override
 	public String toString() {
-		return "FolderSize[path=" + path + ",size=" + size + "]";
+		StringBuilder text = new StringBuilder();
+		text.append("FolderSize[path=").append(path);
+		text.append(",size=").append(size);
+		if (depth > 0) {
+			text.append(",depth=").append(depth);
+		}
+		if (fileCount > 0) {
+			text.append(",fileCount=").append(fileCount);
+		}
+		if (symLinkCount > 0) {
+			text.append(",symLinkCount=").append(symLinkCount);
+		}
+		if (folderCount > 0) {
+			text.append(",folderCount=").append(folderCount);
+		}
+		text.append("]");
+		return text.toString();
 	}
 
 	@Override
@@ -70,7 +121,4 @@ public class FolderSize implements Comparable<FolderSize> {
 		return this.path.compareTo(that.path);
 	}
 
-	public int getDepth() {
-		return depth;
-	}
 }

@@ -24,9 +24,18 @@ public class FolderSizeReport extends SimpleFileVisitor<Path> {
 	private static final Logger log = LoggerFactory.getLogger(FolderSizeReport.class);
 
 	private final Map<Path, FolderSize> folderSizeMap = new LinkedHashMap<>();
+	private FolderSize rootFolder = null;
 	private FolderSize currentFolder = null;
 	private int fileCount = 0;
 	private int folderCount = 0;
+
+	public FolderSize getRootFolder() {
+		return rootFolder;
+	}
+
+	public long getSize() {
+		return rootFolder.getSize();
+	}
 
 	public int getFileCount() {
 		return fileCount;
@@ -76,16 +85,22 @@ public class FolderSizeReport extends SimpleFileVisitor<Path> {
 
 	@Override
 	public FileVisitResult preVisitDirectory(Path folder, BasicFileAttributes attrs) throws IOException {
-		FolderSize folderSize;
-		if (currentFolder != null) {
+		final FolderSize folderSize;
+
+		// Root folder
+		if (currentFolder == null) {
+			folderSize = new FolderSize(folder);
+			rootFolder = folderSize;
+		}
+
+		// Sub folder
+		else {
+			currentFolder.newFolder();
 			folderSize = new FolderSize(folder, currentFolder);
 			folderCount++;
-		} else {
-			folderSize = new FolderSize(folder);
 		}
-		folderSizeMap.put(folder, folderSize);
 
-		// Reset
+		folderSizeMap.put(folder, folderSize);
 		currentFolder = folderSize;
 
 		return CONTINUE;
@@ -93,19 +108,18 @@ public class FolderSizeReport extends SimpleFileVisitor<Path> {
 
 	@Override
 	public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-		currentFolder.increment(attrs.size());
-		fileCount++;
+		if (attrs.isRegularFile()) {
+			currentFolder.newFile(attrs.size());
+			fileCount++;
+		}
+		// We don't handle or record non-regular files yet (sym links, etc)
 		return CONTINUE;
 	}
 
 	@Override
 	public FileVisitResult postVisitDirectory(Path folder, IOException exc) throws IOException {
-
 		FolderSize folderSize = folderSizeMap.get(folder);
-
-		// Reset
 		currentFolder = folderSize.getParent().orElse(null);
-
 		return CONTINUE;
 	}
 
@@ -114,7 +128,7 @@ public class FolderSizeReport extends SimpleFileVisitor<Path> {
 		if (e instanceof AccessDeniedException) {
 			log.warn("Access denied to path: " + path);
 		} else {
-			log.warn("Unable to visit path: " + path, e);
+			log.warn("Failed to visit path: " + path, e);
 		}
 		return CONTINUE;
 	}
