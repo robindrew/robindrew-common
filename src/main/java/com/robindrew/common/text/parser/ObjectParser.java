@@ -13,6 +13,7 @@ public abstract class ObjectParser<P> implements IStringParser<P> {
 		return this;
 	}
 
+	@Override
 	public final P parse(String text) {
 		if (text == null) {
 			if (isNullValid()) {

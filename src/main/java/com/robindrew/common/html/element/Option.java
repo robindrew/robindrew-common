@@ -42,7 +42,7 @@ public class Option extends HtmlElement {
 		this.selected = selected;
 		return this;
 	}
-	
+
 	public Option selected() {
 		return setSelected(true);
 	}
@@ -55,6 +55,7 @@ public class Option extends HtmlElement {
 		return this;
 	}
 
+	@Override
 	public boolean isEmpty() {
 		return false;
 	}

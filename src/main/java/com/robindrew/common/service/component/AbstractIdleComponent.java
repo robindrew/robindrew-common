@@ -123,6 +123,7 @@ public abstract class AbstractIdleComponent extends AbstractIdleService implemen
 
 	public class ComponentListener extends Listener implements Executor {
 
+		@Override
 		public void failed(State from, Throwable failure) {
 			log.error("[" + getName() + "] Crashed", failure);
 			Java.exitAsync(1);
