@@ -40,6 +40,25 @@ public class DynamicNumber {
 		return read;
 	}
 
+	public static long readLong(byte[] input, int offset) throws IOException {
+
+		// Simple byte read
+		byte byte1 = input[offset++];
+		if (NEGATIVE_1 < byte1 && byte1 < POSITIVE_1) {
+			return byte1;
+		}
+
+		boolean negative = byte1 < 0;
+		int bytes = countReadBytes(byte1);
+
+		long value = 0;
+		for (int i = 0; i < bytes; i++) {
+			int read = input[offset++];
+			value |= ((long) (read)) << (i * 8);
+		}
+		return negative ? -value : value;
+	}
+
 	public static long readLong(InputStream input) throws IOException {
 
 		// Simple byte read
@@ -103,6 +122,32 @@ public class DynamicNumber {
 		writeLong(output, value);
 	}
 
+	public static void writeLong(byte[] output, int offset, long value) throws IOException {
+		if (value == Long.MIN_VALUE) {
+			throw new IllegalArgumentException("Long.MIN_VALUE not supported");
+		}
+
+		// Simple byte write
+		if (NEGATIVE_1 < value && value < POSITIVE_1) {
+			output[offset++] = ((byte) value);
+			return;
+		}
+
+		// Set negative flag
+		boolean negative = value < 0;
+		if (negative) {
+			value = -value;
+		}
+		int bytes = countWriteBytes(output, offset++, value, negative);
+
+		// Write bytes
+		while (bytes > 0) {
+			output[offset++] = (byte) (value & 255l);
+			value >>= 8;
+			bytes--;
+		}
+	}
+
 	public static void writeLong(OutputStream output, long value) throws IOException {
 		if (value == Long.MIN_VALUE) {
 			throw new IllegalArgumentException("Long.MIN_VALUE not supported");
@@ -159,6 +204,39 @@ public class DynamicNumber {
 			return 7;
 		}
 		output.write(negative ? NEGATIVE_8 : POSITIVE_8);
+		return 8;
+	}
+
+	private static int countWriteBytes(byte[] output, int offset, long value, boolean negative) throws IOException {
+		if (value <= BYTE_1) {
+			output[offset] = (negative ? NEGATIVE_1 : POSITIVE_1);
+			return 1;
+		}
+		if (value <= BYTE_2) {
+			output[offset] = (negative ? NEGATIVE_2 : POSITIVE_2);
+			return 2;
+		}
+		if (value <= BYTE_3) {
+			output[offset] = (negative ? NEGATIVE_3 : POSITIVE_3);
+			return 3;
+		}
+		if (value <= BYTE_4) {
+			output[offset] = (negative ? NEGATIVE_4 : POSITIVE_4);
+			return 4;
+		}
+		if (value <= BYTE_5) {
+			output[offset] = (negative ? NEGATIVE_5 : POSITIVE_5);
+			return 5;
+		}
+		if (value <= BYTE_6) {
+			output[offset] = (negative ? NEGATIVE_6 : POSITIVE_6);
+			return 6;
+		}
+		if (value <= BYTE_7) {
+			output[offset] = (negative ? NEGATIVE_7 : POSITIVE_7);
+			return 7;
+		}
+		output[offset] = (negative ? NEGATIVE_8 : POSITIVE_8);
 		return 8;
 	}
 
